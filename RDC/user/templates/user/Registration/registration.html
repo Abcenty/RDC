@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/x-icon" href="/static/assets/favicon-32x32.png">
+  <title>RdC</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+</head>
+<body>
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded shadow-xl w-5/12 shadow-2xl">
+          <h1 class="text-2xl font-semibold mb-6">Регистрация</h1>
+          <form @submit.prevent="register">
+            <div class="mb-4">
+                <div>
+                    <input v-model="phoneNumber" @input="validatePhoneNumber" class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg" placeholder="+7 (123) 456-7890" required/>
+                </div>
+              <p v-if="phoneError" class="text-red-500 text-xs mt-1">Пожалуйста, введите корректный телефон</p>
+            </div>
+            <div class="mb-4">
+                <div>
+                    <label for="lastName" class="block mb-1 font-medium">Фамилия</label>
+                    <input v-model="lastName" type="text" id="lastName" class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg" required pattern="[А-Яа-яA-Za-zЁё]+" />
+                    <p v-if="lastName && !/^([А-Яа-яA-Za-zЁё]+)$/.test(lastName)" class="text-red-500 text-xs mt-1">Пожалуйста, введите корректную фамилию</p>
+                </div>
+                <div>
+                    <label for="firstName" class="block mb-1 font-medium">Имя</label>
+                    <input v-model="firstName" type="text" id="firstName" class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg" required pattern="[А-Яа-яA-Za-zЁё]+" />
+                    <p v-if="firstName && !/^([А-Яа-яA-Za-zЁё]+)$/.test(firstName)" class="text-red-500 text-xs mt-1">Пожалуйста, введите корректное имя</p>
+                </div>
+                <div class="mb-4">
+                    <label for="middleName" class="block mb-1 font-medium">Отчество</label>
+                    <input v-model="middleName" type="text" id="middleName" class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg" pattern="[А-Яа-яA-Za-zЁё]+" />
+                    <p v-if="middleName && !/^([А-Яа-яA-Za-zЁё]+)$/.test(middleName)" class="text-red-500 text-xs mt-1">Пожалуйста, введите корректное отчество</p>
+                </div>
+            </div>
+            <div class="mb-4">
+              <label for="birthDate" class="block mb-1 font-medium">Дата рождения</label>
+              <input
+                v-model="birthDate"
+                type="datetime-local"
+                id="birthDate"
+                class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg"
+                placeholder="ДД.ММ.ГГГГ"
+                :class="{ 'border-red-500': birthDateError }"
+                @input="birthDateError = false"
+              />
+              <p v-if="birthDateError" class="text-red-500 text-xs mt-1">Пожалуйста, введите корректную дату</p>
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block mb-1 font-medium">Электронная почта</label>
+              <input
+                v-model="email"
+                type="email"
+                id="email"
+                class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg"
+                placeholder="example@example.com"
+                :class="{ 'border-red-500': emailError }"
+                @input="emailError = false"
+                required
+              />
+              <p v-if="emailError" class="text-red-500 text-xs mt-1">Пожалуйста, введите корректную почту</p>
+            </div>
+            <div class="mb-4">
+              <label for="documentType" class="block mb-1 font-medium">Тип документа</label>
+              <select v-model="documentType" id="documentType" class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg" required>
+                <option value="">Выберите тип документа</option>
+                <option value="passport">Паспорт</option>
+                <option value="birthCertificate">Свидетельство о рождении</option>
+              </select>
+            </div>
+            <div v-if="documentType === 'passport'" class="mb-4">
+              <label for="passportNumber" class="block mb-1 font-medium">Серия и номер паспорта</label>
+              <input v-model="passportNumber" type="text" id="passportNumber" class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg" required/>
+            </div>
+            <div v-if="documentType === 'birthCertificate'" class="mb-4">
+              <label for="birthCertificateNumber" class="block mb-1 font-medium">Номер свидетельства о рождении</label>
+              <input
+                v-model="birthCertificateNumber"
+                type="text"
+                id="birthCertificateNumber"
+                class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg"
+              />
+            </div>
+            <div class="mb-4">
+              <label for="snils" class="block mb-1 font-medium">СНИЛС</label>
+              <input v-model="snils" type="text" id="snils" class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg" />
+            </div>
+            <div class="mb-4">
+              <label for="password" class="block mb-1 font-medium">Пароль</label>
+              <input v-model="password" type="password" id="password" class="w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg" required />
+            </div>
+            <div class="mb-4">
+              <label for="captcha" class="block mb-1 font-medium">Капча</label>
+              <!-- Здесь можно добавить компонент для капчи -->
+            </div>
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">
+              Зарегистрироваться
+            </button>
+          </form>
+          <a href="/authorization" class="flex justify-center mt-2">Авторизоваться</a>
+        </div>
+      </div>
+</body>
+</html>

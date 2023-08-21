@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/x-icon" href="/static/assets/favicon-32x32.png">
+  <title>RdC</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script>
+    document.addEventListener('click', event => {
+        const dropdownButton = event.target.closest("[navbar-dropdown-button]");
+        const dropdown = dropdownButton ? dropdownButton.nextElementSibling : null;
+
+        // Close other open dropdowns
+        const openDropdowns = document.querySelectorAll("[navbar-dropdown].open");
+        openDropdowns.forEach(openDropdown => {
+            if (openDropdown !== dropdown) {
+                openDropdown.classList.add("hidden");
+                openDropdown.classList.remove("open");
+            }
+        });
+
+        if (dropdownButton && dropdown) {
+            dropdown.classList.toggle("hidden");
+            dropdown.classList.toggle("open");
+        } else {
+            openDropdowns.forEach(openDropdown => {
+                openDropdown.classList.add("hidden");
+                openDropdown.classList.remove("open");
+            });
+        }
+    });
+</script>
+</head>
+<nav class="bg-white border-gray-200" >
+    <div class="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
+      <a href="/" class="flex items-center" active-class="">
+        <img src="/static/assets/logo.png" class="h-12 mr-3" alt="RdC">
+        <span class="self-center mr-8 text-2xl font-semibold whitespace-nowrap">RdC</span>
+      </a>
+      <div class="flex ml-auto md:order-2">
+        <div class="relative" x-data="{ open: false }" navbar-dropdown>
+          <button
+            type="button"
+            class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
+            @click="open = !open"
+            navbar-dropdown-button
+          >
+            <img class="w-10 h-10 rounded-full pointer-events-none" src="/static/assets/logo.png" alt="user photo">
+          </button>
+          <div
+            class="hidden dropdown absolute right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+          >
+            <button>
+              <a>Иван</a>
+              <span class="caret"></span>
+            </button>
+            <ul class="menu py-2">
+              <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
+              </li>
+              <li>
+                <a href="/authorization" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
+              </li>
+              <li>
+                <a href="/doctor" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Кабинет врача</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      <button
+        type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        @click="mobileMenu = !mobileMenu"
+      >
+        <svg
+          class="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 17 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15"
+          />
+        </svg>
+      </button>
+    </div>
+    <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" :class="mobileMenu ? 'block' : 'hidden'">
+      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+        <li>
+          <a href="/service" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Заявки</a>
+        </li>
+        <li>
+          <a href="/services" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Услуги</a>
+        </li>
+        <li>
+          <a href="/" class="block py-2 pl-3 pr-4 text-blue-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Загруженные файлы</a>
+        </li>
+        <li>
+          <a href="/protocols" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Протоколы</a>
+        </li>
+        <li>
+          <a href="/payment" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Оплата</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="mt-24 flex flex-col items-center max-w-screen-xl mx-auto">
+    <div class="flex w-full">
+        <div class="overflow-x-auto w-full rounded-lg border-2 border-blue-300">
+          <table class="table-auto w-full">
+            <thead class="">
+              <tr>
+                <th class="font-medium w-1/12 p-2 border border-slate-500 border-blue-500">ID заявки</th>
+                <th class="font-medium w-2/12 p-2 border border-slate-500 border-blue-500">Дата заявки</th>
+                <th class="font-medium w-9/12 p-2 border border-slate-500 border-blue-500">Файлы</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm">
+              <tr>
+                <td class="font-normal p-2 border border-slate-500 border-blue-500">1</td>
+                <td class="font-normal p-2 border border-slate-500 border-blue-500">18.08.2023</td>
+                <td class="font-normal p-2 border border-slate-500 border-blue-500">Файл 1</td>
+              </tr> 
+              <tr>
+                <td class="font-normal p-2 border border-slate-500 border-blue-500">1</td>
+                <td class="font-normal p-2 border border-slate-500 border-blue-500">18.08.2023</td>
+                <td class="font-normal p-2 border border-slate-500 border-blue-500">Файл 2</td>
+              </tr> 
+            </tbody>
+          </table>
+        </div>
+      </div>
+</div>
+        <div class="items-center max-w-screen-xl mx-auto flex flex-row justify-between pt-8">
+        <!-- <form action="/confirmation" target="_parent">
+            <button
+                type="submit"
+                class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+              >
+                  Назад
+              </button>
+            </form>
+            <form action="#" target="_parent">
+              <button
+                  type="submit"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+              >
+                
+              </button>
+            </form> -->
+          </div>
+       </div>
+    </body>
+</html>

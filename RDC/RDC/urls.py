@@ -19,12 +19,24 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path
-from treatment import views as treatment_views 
+from treatment import views as treatment_views
+from user import views as user_views
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
     path('service/', treatment_views.service),
     path('doctor/', treatment_views.doctor),
+    path('toserve/', treatment_views.whomToServe),
+    path('upload/', treatment_views.uploadFiles),
+    path('confirmation/', treatment_views.confirmation),
+    path('payment/', treatment_views.payment),
+    path('services/', treatment_views.services),
+    path('uploadedfiles/', treatment_views.uploadedfiles),
+
+    path('authorization/', user_views.authorization),
+    path('registration/', user_views.registration),
+    
 ]
 
 if settings.DEBUG:
