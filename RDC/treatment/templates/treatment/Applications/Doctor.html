@@ -39,7 +39,7 @@
         <span class="self-center mr-8 text-2xl font-semibold whitespace-nowrap">RdC</span>
       </a>
       <div class="flex ml-auto md:order-2">
-        <div class="relative" x-data="{ open: false }" navbar-dropdown>
+        <div class="relative" x-data="{ open: false }" navbar-dropdown> <!--Выпадающий список-->
           <button
             type="button"
             class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
@@ -241,7 +241,6 @@
           <p class="text-base">Оплата</p>
         </li>
       </ol>  
-
         <div class="flex flex-col items-center max-w-screen-xl mx-auto">
             <h1 class="mb-4 text-2xl font-medium mr-auto">Выберите врача</h1>
             <input
@@ -251,12 +250,15 @@
                 placeholder="Поиск врача..."
             />
             <select class="w-full px-2 py-1.5 mb-3 border border-blue-300 rounded-lg rounded-lg focus:outline-blue-500"
-            v-model="form.serviceForMe">>
+            v-model="form.serviceForMe">
+            {% for doctor in doctors %}
             <option v-for="index in filteredServices"
                     :key="index"
                     :value="index"
                     class="cursor-pointer hover:bg-blue-400 px-3 py-2 hover:text-white"
                     :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'">
+                    {{doctor}}
+        {% endfor %}
             </option>
           </select>
             <div class="flex flex-row gap-2 mr-auto">
@@ -265,9 +267,14 @@
                     class="w-5 h-5 rounded">
               <p>Продолжить без врача</p>
             </div>
-          </div>
+        </div>
+
+
+
+
+
           <div class="items-center max-w-screen-xl mx-auto flex flex-row justify-between pt-8">
-            <form action="/service" target="_parent">
+            <form action="{% url 'service' %}" target="_parent">
               <button
                   type="submit"
                   class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"

@@ -19,24 +19,27 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path
-from treatment import views as treatment_views
-from user import views as user_views
+from treatment.views import service, doctor, payment, whomToServe, uploadedfiles, uploadFiles, confirmation, services
+from user.views import authorization, registration
+from treatment.services import request_add
 
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('service/', treatment_views.service),
-    path('doctor/', treatment_views.doctor),
-    path('toserve/', treatment_views.whomToServe),
-    path('upload/', treatment_views.uploadFiles),
-    path('confirmation/', treatment_views.confirmation),
-    path('payment/', treatment_views.payment),
-    path('services/', treatment_views.services),
-    path('uploadedfiles/', treatment_views.uploadedfiles),
+    path('', service, name='service'),
+    path('doctor/', doctor, name='doctor'),
+    path('toserve/', whomToServe, name='whomToServe'),
+    path('upload/', uploadFiles, name='uploadFiles'),
+    path('confirmation/', confirmation, name='confirmation'),
+    path('payment/', payment, name='payment'),
+    path('services/', services, name='services'),
+    path('uploadedfiles/', uploadedfiles, name='uploadedfiles'),
 
-    path('authorization/', user_views.authorization),
-    path('registration/', user_views.registration),
-    
+    path('authorization/', authorization, name='authorization'),
+    path('registration/', registration, name='registration'),
+
+    path('request_add/', request_add, name='request_add'),
+ 
 ]
 
 if settings.DEBUG:

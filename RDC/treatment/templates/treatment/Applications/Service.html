@@ -251,33 +251,77 @@
         class="w-full px-2 py-1.5 mb-3 border border-blue-300 rounded-lg rounded-lg focus:outline-blue-500"
         placeholder="Поиск услуги..."
       />
-      <select
+
+      <!--Изначальный вариант, который просто выводит список-->
+      <!--<select title="selected_service"
         v-model="selectedService"
         class="w-full px-2 py-1.5 mb-3 border border-blue-300 rounded-lg rounded-lg focus:outline-blue-500">
         <option disabled value="">Выберите услугу</option>
-        <option v-for="index in filteredServices"
-                :key="index"
-                :value="index"
-                class="cursor-pointer hover:bg-blue-400 px-3 py-2 hover:text-white"
-                :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'">
+        {% for service in services %}
+        <option value="index">
+        {{service}}
+        {% endfor %}
         </option>
+      </select>-->
+
+      <!--Вариант, в котором таблица выбора-->
+      <!--<form action="{% url 'request_add' %}" method="post">
+         {% csrf_token %}
+        <p>Выберете услугу</p>
+        <select multiple class="form-control" id="optService" name="service" required>
+            {% for service in services %}
+                <option value="{{service.id}}">{{service.title}}</option>
+            {% endfor %}
+        </select>
+        <p><input type="submit" value="Send form"/></p>
+    </form>-->
+
+    <!--Вариант, в котором выбор в выпадающем списке нужно подтвердить отдельной кнопкой-->
+    <!--<form action="{% url 'request_add' %}" method="post">
+    {% csrf_token %}
+    <select title="selected_service" class="form-control" name="service" required
+        v-model="selectedService"
+        class="w-full px-2 py-1.5 mb-3 border border-blue-300 rounded-lg rounded-lg focus:outline-blue-500">
+        <option disabled value="">Выберите услугу</option>
+        {% for service in services %}
+                <option value="{{service.id}}">{{service}}</option>
+            {% endfor %}
       </select>
+      <p><input type="submit" value="Send form"/></p>
+    </form>-->
+
+
+    <form action="{% url 'request_add' %}" method="post">
+        {% csrf_token %}
+        <select title="selected_service" class="form-control" name="service" required
+            v-model="selectedService"
+            class="w-full px-2 py-1.5 mb-3 border border-blue-300 rounded-lg rounded-lg focus:outline-blue-500">
+            <option disabled value="">Выберите услугу</option>
+            {% for service in services %}
+                    <option value="{{service.id}}">{{service}}</option>
+                {% endfor %}
+          </select>
+          <p><input type="submit" value="Далее"
+             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"/></p>
+        </form>
+    
+
     </div>
     <div class="items-center max-w-screen-xl mx-auto flex flex-row justify-between pt-8">
       <form action="#" target="_parent">
         <button
             type="submit"
-            class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+            class="text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
         >
-            Назад
+            
         </button>
       </form>
-      <form action="/doctor" target="_parent">
+      <form action="{% url 'doctor' %}" target="_parent">
         <button
             type="submit"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+            class="text-white focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
         >
-          Далее
+        
         </button>
       </form>
     </div>
