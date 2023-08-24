@@ -20,7 +20,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from treatment.views import service, doctor, payment, whomToServe, uploadedfiles, uploadFiles, confirmation, services
-from user.views import authorization, registration
+from user.views import authorization, registration, activate_account
 from treatment.services import request_add
 
 urlpatterns = [
@@ -39,6 +39,8 @@ urlpatterns = [
     path('registration/', registration, name='registration'),
 
     path('request_add/', request_add, name='request_add'),
+
+    path('activate/<str:uidb64>/<str:token>/', activate_account, name='activate'),
  
 ]
 

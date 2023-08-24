@@ -28,18 +28,20 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegistrationForm(UserCreationForm):
+    # telephone = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите телефон'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите имя'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите фамилию'}))
     patronymic = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите отчество'}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Введите адрес электронной почты'}))
-    SNILS = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Введите СНИЛС'}))
-    Passport = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Введите серию и номер паспорта'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Подтвердите пароль'}))
+    SNILS = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите СНИЛС'}))
+    Passport = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите серию и номер паспорта'}))
+    # birthCertificateNumber = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите номер свидетельства о рождении'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'}))
+    birthDate =  forms.CharField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения'}))
 
     class Meta:
         model = Users
-        fields = ('first_name', 'last_name', 'patronymic', 'email', 'SNILS', 'Passport', 'password1', 'password2')
+        fields = ('password', 'last_name', 'first_name', 'patronymic', 'birthDate', 'email', 'SNILS', 'Passport')
 
 """    def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)

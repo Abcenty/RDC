@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv, find_dotenv
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,6 +34,14 @@ ALLOWED_HOSTS = [
     '*'
 ]
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'danya.pochta76@gmail.com'
+EMAIL_HOST_PASSWORD = 'fowrnwscvudbgtui'
 
 # Application definition
 
@@ -88,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'RDCdata',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': '123volini',
         'HOST': 'localhost',
         'PORT': 5432,
     }
