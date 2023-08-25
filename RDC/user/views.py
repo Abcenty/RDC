@@ -19,9 +19,10 @@ def authorization(request):
     if request.method == "POST":
         form = UserLoginForm(data=request.POST)
         if form.is_valid():
+            username = request.POST['username']
             email = request.POST['email']
             password = request.POST['password']
-            user = auth.authenticate(email=email, password=password)
+            user = auth.authenticate(username=username, email=email, password=password)
             if user and user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('service'))
@@ -30,7 +31,22 @@ def authorization(request):
     context = {'form': form}
     return render(request, 'user/Authorization/authorization.html', context)
 
+
+
 def registration(request):
+    if request.method == "POST":
+        form = UserRegistrationForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Вы успешно зарегистрировались!')
+            return HttpResponseRedirect(reverse('authorization'))
+    else:
+        form = UserRegistrationForm()
+    context = {'form': form}
+    return render(request, 'user/Registration/registration.html', context)
+
+
+"""def registration(request):
     if request.method == "POST":
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
@@ -61,7 +77,7 @@ def registration(request):
         form = UserRegistrationForm()
     context = {'form': form}
     return render(request, 'user/Registration/registration.html', context)
-
+"""
 def activate_account(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()

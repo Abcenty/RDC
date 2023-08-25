@@ -10,7 +10,7 @@ import datetime
 class Requests(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     service = models.ForeignKey(Services, on_delete=models.CASCADE)
-    patient = models.ForeignKey(Patients, on_delete=models.CASCADE, blank=True, default=2)
+    patient = models.ForeignKey(Patients, on_delete=models.CASCADE, blank=True, default=1)
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ПАЦИЕНТА С ПОЛЯМИ DEFAULT И УКАЗЫВАЙ ЕГО ID В default - ОН ЗАКОСТЫЛЕН
     status = models.IntegerField(
         default=1)  # 0 - ошибка оплаты, 1 - новый запрос, 2 - оплачено, 3 - отправлено, 4 - ожидает подтверждения,

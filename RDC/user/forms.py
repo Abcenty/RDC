@@ -28,20 +28,22 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegistrationForm(UserCreationForm):
-    # telephone = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите телефон'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите имя пользователя'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите имя'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите фамилию'}))
     patronymic = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите отчество'}))
+    phone = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите номер телефона'}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'placeholder': 'Введите адрес электронной почты'}))
-    SNILS = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите СНИЛС'}))
-    Passport = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите серию и номер паспорта'}))
+    SNILS = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите СНИЛС'}))
+    Passport = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите серию и номер паспорта'}))
     # birthCertificateNumber = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите номер свидетельства о рождении'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Введите подтверждение пароля'}))
     birthDate =  forms.CharField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения'}))
 
     class Meta:
         model = Users
-        fields = ('password', 'last_name', 'first_name', 'patronymic', 'birthDate', 'email', 'SNILS', 'Passport')
+        fields = ('password1', 'password2', 'username', 'last_name', 'first_name', 'phone', 'patronymic', 'birthDate', 'email', 'SNILS', 'Passport')
 
 """    def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
