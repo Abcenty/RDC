@@ -5,15 +5,19 @@ from django.urls import reverse
 
 
 def request_add(request):
-    services = Services.objects.all()
     if request.method == "POST":
        service_pk = request.POST.get('service', None)
        service = Services.objects.get(pk__in=service_pk)
        Requests.objects.create(status=1, user=request.user, service=service)
-    context = {
-        'services': services,
-    }
-    return render(request, 'treatment/Applications/Doctor.html', context)
+    return HttpResponseRedirect(reverse('doctor'))
+
+
+def doctor_add(request):
+    if request.method == "POST":
+       doctor_pk = request.POST.get('doctor', None)
+       doctor = Services.objects.get(pk__in=doctor_pk)
+       Requests.objects.filter(user=request.user, status=1).update(doctor=doctor, status=2)
+    return HttpResponseRedirect(reverse('whomToServe'))
 
 
 """def request_add(request):

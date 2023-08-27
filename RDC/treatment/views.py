@@ -8,23 +8,31 @@ from django.views.generic import ListView, CreateView, UpdateView
 
 # Create your views here.
 
+
 def service(request):
+    context = {
+        'services': Services.objects.all(),
+    }
+    return render(request, 'treatment/Applications/Service.html', context)
+
+
+def doctor(request):
+    current_request = Requests.objects.get(user=request.user, status=1)
+    context = {
+        'doctors': Doctors.objects.filter(services=current_request.service),
+    }
+    return render(request, 'treatment/Applications/Doctor.html', context)
+
+
+"""def service(request):
     services = Services.objects.all()
-    form = request.POST
     if request.method == "POST":
        selected_service = get_object_or_404(Services, pk=request.POST.get('service_id'))
        Requests.objects.create(user=request.user, service=selected_service, status=1)
     context = {
         'services': services,
     }
-    return render(request, 'treatment/Applications/Service.html', context)
-
-
-def doctor(request):
-    context = {
-        'doctors': Doctors.objects.all(),
-    }
-    return render(request, 'treatment/Applications/Doctor.html', context)
+    return render(request, 'treatment/Applications/Service.html', context)"""
 
 
 def whomToServe(request):
