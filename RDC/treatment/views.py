@@ -5,11 +5,11 @@ from django.urls import reverse
 
 
 # Create your views here.
-
+# MyModel.objects.exclude(category= u'mycategory')
 
 def service(request):
     context = {
-        'services': Services.objects.all(),
+        'services': Services.objects.exclude(title='Default'),
     }
     return render(request, 'treatment/Applications/Service.html', context)
 
@@ -52,8 +52,14 @@ def payment(request):
 
 
 def services(request):
-    return render(request, 'treatment/Services/services.html')
+    context = {
+        'services': Requests.objects.filter(user=request.user),
+    }
+    return render(request, 'treatment/Services/services.html', context)
 
 
 def uploadedfiles(request):
     return render(request, 'treatment/UploadedFiles/uploadedfiles.html')
+
+
+

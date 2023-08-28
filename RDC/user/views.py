@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.urls import reverse
-from user.forms import UserLoginForm, UserRegistrationForm
+from user.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
@@ -44,6 +44,14 @@ def registration(request):
         form = UserRegistrationForm()
     context = {'form': form}
     return render(request, 'user/Registration/registration.html', context)
+
+
+def profile(request):
+    form = UserProfileForm(instance=request.user)
+    context = {
+        'form': form,
+               }
+    return render(request, 'user/profile/profile.html', context)
 
 
 """def registration(request):
