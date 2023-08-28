@@ -1,16 +1,23 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from .models import Users, Services
-from treatment.models import Requests
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
+    
+
+from .models import Users, Patients
+from treatment.models import Requests
 
 
-class ServiceChoiceForm(forms.ModelForm):
-    service = forms.ModelChoiceField(queryset=Services.objects.all(), label='Услуги')
+class PatientChoosingForm(forms.Form):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите имя'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите фамилию'}))
+    patronymic = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите отчество'}))
+    SNILS = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите СНИЛС'}))
+    Passport = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите серию и номер паспорта'}))
+    # birthCertificateNumber = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите номер свидетельства о рождении'}))
+    birthDate =  forms.CharField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения'}))
 
     class Meta:
-        model = Requests
-        fields = ('service',)
-
+        model = Patients
+        fields = ('last_name', 'first_name', 'patronymic', 'birthDate', 'SNILS', 'Passport')
 
 
 class UserLoginForm(AuthenticationForm):

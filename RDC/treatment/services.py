@@ -1,7 +1,8 @@
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from treatment.models import Requests
-from user.models import Services
+from user.models import Services, Patients
 from django.urls import reverse
+from user.forms import PatientChoosingForm
 
 
 def request_add(request):
@@ -18,6 +19,42 @@ def doctor_add(request):
        doctor = Services.objects.get(pk__in=doctor_pk)
        Requests.objects.filter(user=request.user, status=1).update(doctor=doctor, status=2)
     return HttpResponseRedirect(reverse('whomToServe'))
+
+
+def patient_add(request):
+    user = request.user
+    user_patient = request.POST.get('serviceForMe', None)
+    another_patient = request.POST.get('serviceForAnother', None)
+    default_patient = request.POST.get('serviceForNobody', None)
+    if request.method == "POST" and user_patient:
+        patient = Patients.objects.create(first_name=user.first_name, last_name=user.last_name, patronymic=user.patronymic,
+                                          SNILS=user.SNILS, Passport=user.Passport, birthDate=user.birthDate)
+        Requests.objects.filter(user=request.user, status=2).update(patient=patient, status=3)
+        return HttpResponseRedirect(reverse('uploadedfiles'))
+    # another_patient - словарь "ключ-значение". Если по ключу serviceForAnother будет записано какое-то значение (то есть
+    # радио-кнопка нажата) то при проверке на следующей строчке код пойдет дальше на заполнение формы, если по ключу ничего
+    # не придет, то по нему будет записано None и заполнение формы не последует. Такая же логика во всем контроллере
+    elif request.method == "POST" and another_patient:
+        form = PatientChoosingForm(data=request.POST)
+        if form.is_valid():
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            patronymic = request.POST['patronymic']
+            SNILS = request.POST['SNILS']
+            Passport = request.POST['Passport']
+            birthDate = request.POST['birthDate']
+            patient = Patients.objects.create(first_name=first_name, last_name=last_name, patronymic=patronymic, SNILS=SNILS,
+                                      Passport=Passport, birthDate=birthDate)
+            Requests.objects.filter(user=request.user, status=2).update(patient=patient, status=3)
+            return HttpResponseRedirect(reverse('uploadedfiles'))
+    else:
+        if request.method == "POST" and default_patient:
+            Requests.objects.filter(user=request.user, status=2).update(status=3)
+            return HttpResponseRedirect(reverse('uploadedfiles'))
+    return HttpResponseRedirect(reverse('whomToServe'))
+        
+
+
 
 
 """def request_add(request):

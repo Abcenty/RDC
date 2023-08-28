@@ -1,9 +1,7 @@
-from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
-from user.models import Services, Doctors
+from django.shortcuts import render, HttpResponseRedirect
+from user.models import Services, Doctors, Patients
 from treatment.models import Requests
-from user.forms import ServiceChoiceForm
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView
+from django.urls import reverse
 
 
 # Create your views here.
@@ -23,6 +21,8 @@ def doctor(request):
     }
     return render(request, 'treatment/Applications/Doctor.html', context)
 
+
+""""""
 
 """def service(request):
     services = Services.objects.all()
