@@ -5,11 +5,11 @@ from django.urls import reverse
 
 
 # Create your views here.
-
+# MyModel.objects.exclude(category= u'mycategory')
 
 def service(request):
     context = {
-        'services': Services.objects.all(),
+        'services': Services.objects.exclude(title='Default'),
     }
     return render(request, 'treatment/Applications/Service.html', context)
 

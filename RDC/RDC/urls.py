@@ -25,7 +25,7 @@ from treatment.services import request_add, doctor_add, patient_add
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('service', service, name='/'),
+    path('service/', service, name='service'),
     path('doctor/', doctor, name='doctor'),
     path('toserve/', whomToServe, name='whomToServe'),
     path('upload/', uploadFiles, name='uploadFiles'),
