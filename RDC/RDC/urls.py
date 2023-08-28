@@ -20,13 +20,12 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 from treatment.views import service, doctor, payment, whomToServe, uploadedfiles, uploadFiles, confirmation, services
-from user.views import authorization, registration, activate_account
+from user.views import authorization, registration, activate_account, profile
 from treatment.services import request_add, doctor_add, patient_add
 
 urlpatterns = [
-
     path('admin/', admin.site.urls),
-    path('', service, name='service'),
+    path('service', service, name='/'),
     path('doctor/', doctor, name='doctor'),
     path('toserve/', whomToServe, name='whomToServe'),
     path('upload/', uploadFiles, name='uploadFiles'),
@@ -37,14 +36,15 @@ urlpatterns = [
 
     path('authorization/', authorization, name='authorization'),
     path('registration/', registration, name='registration'),
+    path('', profile, name='profile'),
 
     path('request_add/', request_add, name='request_add'),
     path('doctor_add/', doctor_add, name='doctor_add'),
     path('patient_add', patient_add, name='patient_add'),
 
     path('activate/<str:uidb64>/<str:token>/', activate_account, name='activate'),
- 
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

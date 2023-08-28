@@ -60,3 +60,6 @@ def services(request):
 
 def uploadedfiles(request):
     return render(request, 'treatment/UploadedFiles/uploadedfiles.html')
+
+
+

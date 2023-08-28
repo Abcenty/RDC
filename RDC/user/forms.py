@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django import forms
     
 
@@ -52,6 +52,16 @@ class UserRegistrationForm(UserCreationForm):
         model = Users
         fields = ('password1', 'password2', 'username', 'last_name', 'first_name', 'phone', 'patronymic', 'birthDate', 'email', 'SNILS', 'Passport')
 
+
+class UserProfileForm(UserChangeForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+    email = forms.CharField(widget=forms.EmailInput(attrs={'readonly': True}))
+
+    class Meta:
+        model = Users
+        fields = ('username', 'email', 'first_name', 'last_name')
 """    def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
         for field_name, filed in self.fields.items():
