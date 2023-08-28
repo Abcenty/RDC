@@ -62,6 +62,20 @@ class UserProfileForm(UserChangeForm):
     class Meta:
         model = Users
         fields = ('username', 'email', 'first_name', 'last_name')
+
+
+class UserConfirmationForm(forms.Form):
+    service = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+    patient = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+    doctor = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+
+
+class Meta:
+        model = Requests
+        fields = ('service', 'patient', 'doctor') # 'files'
+
+
+
 """    def __init__(self, *args, **kwargs):
         super(UserRegistrationForm, self).__init__(*args, **kwargs)
         for field_name, filed in self.fields.items():

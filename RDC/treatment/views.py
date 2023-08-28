@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from user.models import Services, Doctors, Patients
 from treatment.models import Requests
 from django.urls import reverse
+from user.forms import UserConfirmationForm
 
 
 # Create your views here.
@@ -44,7 +45,11 @@ def uploadFiles(request):
 
 
 def confirmation(request):
-    return render(request, 'treatment/Applications/Confirmation.html')
+    context = {
+        'request': Requests.objects.filter(user=request.user, status=3),
+        # 'form': UserConfirmationForm(instance=request.user),
+    }
+    return render(request, 'treatment/Applications/Confirmation.html', context)
 
 
 def payment(request):
