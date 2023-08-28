@@ -52,7 +52,10 @@ def payment(request):
 
 
 def services(request):
-    return render(request, 'treatment/Services/services.html')
+    context = {
+        'services': Requests.objects.filter(user=request.user),
+    }
+    return render(request, 'treatment/Services/services.html', context)
 
 
 def uploadedfiles(request):
