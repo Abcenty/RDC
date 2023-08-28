@@ -12,7 +12,7 @@
                             <input
                                 id="me"
                                 type="radio"
-                                name="serviceForMe"
+                                name="service_choice"
                                 value="me"
                                 class="w-5 h-5 rounded-full mt-0.5"
                                 onclick="toggleFormFields('me')"
@@ -23,7 +23,7 @@
                             <input
                                 id="other"
                                 type="radio"
-                                name="serviceForAnother"
+                                name="service_choice"
                                 value="other"
                                 class="w-5 h-5 rounded-full mt-0.5"
                                 onclick="toggleFormFields('other')"
@@ -34,7 +34,7 @@
                             <input
                                 id="none"
                                 type="radio"
-                                name="serviceForNobody"
+                                name="service_choice"
                                 value="none"
                                 class="w-5 h-5 rounded-full mt-0.5"
                                 onclick="toggleFormFields('none')"
@@ -126,7 +126,9 @@
               Назад
           </button>
         </form>
-        <form action="{% url 'whom_to_serve_add' %}" target="_parent">
+        <form action="{% url 'patient_add' %}" target="_parent" method="post">
+            {% csrf_token %}
+            <input type="hidden" id="userChoice" name="service_choice" value="">
           <button
               type="submit"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
@@ -162,6 +164,8 @@
                     passportdateInput.value = "";
                     snilsInput.value = "";
                 }
+                const userChoiceField = document.getElementById("userChoice");
+                userChoiceField.value = value;
             }
         </script>
         {% endblock %}
