@@ -18,8 +18,8 @@ class Users(AbstractUser):
     last_name = models.CharField(max_length=32)
     first_name = models.CharField(max_length=32)
     patronymic = models.CharField(max_length=32)
-    birthDate = models.DateField(default='2000-01-01')
-    phone = models.CharField(max_length=11, default='89000000000')
+    birth_date = models.DateField(default='2000-01-01')
+    # phone = models.CharField(max_length=11, default='89000000000')
     SNILS = models.CharField(max_length=11, blank=True)
     Passport = models.CharField(max_length=10)
 
@@ -27,7 +27,7 @@ class Patients(models.Model):
     last_name = models.CharField(max_length=32)
     first_name = models.CharField(max_length=32)
     patronymic = models.CharField(max_length=32)
-    birthDate = models.DateField(default='2000-01-01')
+    birth_date = models.DateField(default='2000-01-01')
     SNILS = models.CharField(max_length=11, blank=True)
     Passport = models.CharField(max_length=10)
 
