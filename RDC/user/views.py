@@ -33,7 +33,7 @@ def authorization(request):
 
 
 
-def registration(request):
+"""def registration(request):
     if request.method == "POST":
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
@@ -43,18 +43,9 @@ def registration(request):
     else:
         form = UserRegistrationForm()
     context = {'form': form}
-    return render(request, 'user/Registration/registration.html', context)
+    return render(request, 'user/Registration/registration.html', context)"""
 
-
-def profile(request):
-    form = UserProfileForm(instance=request.user)
-    context = {
-        'form': form,
-               }
-    return render(request, 'user/profile/profile.html', context)
-
-
-"""def registration(request):
+def registration(request):
     if request.method == "POST":
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
@@ -77,15 +68,23 @@ def profile(request):
             })
             from_email = 'noreply@rdc.com'
             recipient_list = [user.email]
-            send_mail(subject, message, from_email, recipient_list)
+            send_mail(subject, message, from_email, recipient_list, html_message=message)
 
             messages.success(request, 'Вы успешно зарегистрировались! Пожалуйста, проверьте свою почту для активации аккаунта.')
-            return HttpResponseRedirect(reverse('authorization'))
+            return HttpResponseRedirect(reverse('alert'))
     else:
         form = UserRegistrationForm()
     context = {'form': form}
     return render(request, 'user/Registration/registration.html', context)
-"""
+
+
+def profile(request):
+    form = UserProfileForm(instance=request.user)
+    context = {
+        'form': form,
+               }
+    return render(request, 'user/profile/profile.html', context)
+
 def activate_account(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
@@ -115,3 +114,6 @@ def register_view(request):
         return JsonResponse(response_data, status=200)
     else:
         return JsonResponse({'message': 'Метод не разрешен'}, status=405)
+    
+def alert(request):
+    return render(request, 'user/alert.html')

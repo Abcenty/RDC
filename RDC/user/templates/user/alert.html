@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDC</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+</head>
+<body>
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded shadow-xl w-4/12">
+          <h1 class="text-2xl font-semibold ">Письмо с подтверждением уже выслано на почту!</h1><br>
+          <div>
+            <button type="submit" class="mt-8 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">
+                <a href="{% url 'authorization' %}">Авторизоваться</a>
+            </button>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
