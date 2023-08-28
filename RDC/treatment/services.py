@@ -57,32 +57,32 @@ def doctor_add(request):
 def patient_add(request):
     user = request.user
     user_choice = request.POST.get('service_choice')
-    print (user_choice)
     if user_choice == "me":
         patient = Patients.objects.create(first_name=user.first_name, last_name=user.last_name, patronymic=user.patronymic,
-                                          SNILS=user.SNILS, Passport=user.Passport, birthDate=user.birth_date)
+                                          SNILS=user.SNILS, Passport=user.Passport, birth_date=user.birth_date)
         Requests.objects.filter(user=request.user, status=2).update(patient=patient, status=3)
-        return HttpResponseRedirect(reverse('uploadedfiles'))
+        return HttpResponseRedirect(reverse('uploadfiles'))
     # another_patient - словарь "ключ-значение". Если по ключу serviceForAnother будет записано какое-то значение (то есть
     # радио-кнопка нажата) то при проверке на следующей строчке код пойдет дальше на заполнение формы, если по ключу ничего
     # не прuser_choiceкая же логика во всем контроллере
     elif user_choice == "other":
-        form = PatientChoosingForm(data=request.POST)
-        if form.is_valid():
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            patronymic = request.POST['patronymic']
-            SNILS = request.POST['SNILS']
-            Passport = request.POST['Passport']
-            birthDate = request.POST['birthDate']
-            patient = Patients.objects.create(first_name=first_name, last_name=last_name, patronymic=patronymic, SNILS=SNILS,
-                                      Passport=Passport, birthDate=birthDate)
-            Requests.objects.filter(user=request.user, status=2).update(patient=patient, status=3)
-            return HttpResponseRedirect(reverse('uploadedfiles'))
+        if request.method == "POST":
+            form = PatientChoosingForm(data=request.POST)
+            if form.is_valid():
+                first_name = request.POST.get('first_name', None)
+                last_name = request.POST.get('last_name', None)
+                patronymic = request.POST.get('patronymic', None)
+                SNILS = request.POST.get('SNILS', None)
+                Passport = request.POST.get('Passport', None)
+                birth_date = request.POST.get('birth_date', None)
+                patient = Patients.objects.create(first_name=first_name, last_name=last_name, patronymic=patronymic, SNILS=SNILS,
+                                      Passport=Passport, birth_date=birth_date)
+                Requests.objects.filter(user=request.user, status=2).update(patient=patient, status=3)
+                return HttpResponseRedirect(reverse('uploadfiles'))
     else:
         if user_choice == "none":
             Requests.objects.filter(user=request.user, status=2).update(status=3)
-            return HttpResponseRedirect(reverse('uploadedfiles'))
+            return HttpResponseRedirect(reverse('uploadfiles'))
     return HttpResponseRedirect(reverse('whomToServe'))
 
 

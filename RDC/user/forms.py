@@ -6,18 +6,18 @@ from .models import Users, Patients
 from treatment.models import Requests
 
 
-class PatientChoosingForm(forms.Form):
+class PatientChoosingForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите имя'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите фамилию'}))
     patronymic = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите отчество'}))
     SNILS = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите СНИЛС'}))
     Passport = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите серию и номер паспорта'}))
     # birthCertificateNumber = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите номер свидетельства о рождении'}))
-    birthDate =  forms.CharField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения'}))
+    birth_date =  forms.CharField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения'}))
 
     class Meta:
         model = Patients
-        fields = ('last_name', 'first_name', 'patronymic', 'birthDate', 'SNILS', 'Passport')
+        fields = ('last_name', 'first_name', 'patronymic', 'birth_date', 'SNILS', 'Passport')
 
 
 class UserLoginForm(AuthenticationForm):
@@ -66,7 +66,7 @@ class UserRegistrationForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Введите подтверждение пароля',
         'class': 'w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg'}))
-    birthDate = forms.DateField(widget=forms.DateInput(attrs={
+    birth_date = forms.DateField(widget=forms.DateInput(attrs={
         'placeholder': 'Введите дату и время рождения',
         'class': 'w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg',
         'type': 'date'  # указываем тип ввода для HTML5
@@ -74,7 +74,7 @@ class UserRegistrationForm(UserCreationForm):
 
     class Meta:
         model = Users
-        fields = ('password1', 'password2', 'username', 'last_name', 'first_name', 'phone', 'patronymic', 'birthDate', 'email', 'SNILS', 'Passport')
+        fields = ('password1', 'password2', 'username', 'last_name', 'first_name', 'phone', 'patronymic', 'birth_date', 'email', 'SNILS', 'Passport')
 
 
 class UserProfileForm(UserChangeForm):

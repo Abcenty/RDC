@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from user.models import Services, Doctors, Patients
 from treatment.models import Requests
 from django.urls import reverse
-from user.forms import UserConfirmationForm
+from user.forms import UserConfirmationForm, PatientChoosingForm
 
 
 # Create your views here.
@@ -37,7 +37,10 @@ def doctor(request):
 
 
 def whomToServe(request):
-    return render(request, 'treatment/Applications/WhomToServe.html')
+    context = {
+        'form': PatientChoosingForm(data=request.POST),
+    }
+    return render(request, 'treatment/Applications/WhomToServe.html', context)
 
 
 def uploadFiles(request):
