@@ -240,7 +240,7 @@
 {% block content %}
 
                    
-        <div class="justify-evenly flex items-center max-w-screen-xl  space-x-2 text-sm font-medium text-center text-gray-500 bg-white shadow-sm m-4 mx-auto">
+        <div class="justify-evenly flex items-center max-w-screen-xl flex-col space-x-2 text-sm font-medium text-center text-gray-500 bg-white shadow-sm m-4 mx-auto">
         <div class="flex flex-row mx-auto w-full">
             <div class="flex flex-col gap-2 mx-auto w-full">
                 <h1 class="mb-4 text-2xl font-medium mr-auto text-black">Кому оказать услугу</h1>
@@ -359,7 +359,7 @@
             </div>
         
     </div>
-    <div class="items-center max-w-screen-xl mx-auto flex flex-row justify-between pt-8">
+    <div class="items-center w-full mx-auto flex flex-row justify-between pt-8">
         <form action="{% url 'doctor' %}" target="_parent">
           <button
               type="submit"
