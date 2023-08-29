@@ -21,8 +21,15 @@ class PatientChoosingForm(forms.ModelForm):
 
 
 class UserLoginForm(AuthenticationForm):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Введите адрес электронной почты'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Введите имя пользователя',
+        'class': 'w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'placeholder': 'Введите адрес электронной почты',
+        'class': 'w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Введите пароль',
+        'class': 'w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg'}))
 
     class Meta:
         model = Users
@@ -66,7 +73,7 @@ class UserRegistrationForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Введите подтверждение пароля',
         'class': 'w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg'}))
-    birth_date = forms.DateField(widget=forms.DateInput(attrs={
+    birthDate = forms.DateField(widget=forms.DateInput(attrs={
         'placeholder': 'Введите дату и время рождения',
         'class': 'w-full px-4 py-2 border border-slate-300 border-sky-300 rounded-lg',
         'type': 'date'  # указываем тип ввода для HTML5
@@ -74,14 +81,24 @@ class UserRegistrationForm(UserCreationForm):
 
     class Meta:
         model = Users
-        fields = ('password1', 'password2', 'username', 'last_name', 'first_name', 'phone', 'patronymic', 'birth_date', 'email', 'SNILS', 'Passport')
+        fields = ('password1', 'password2', 'username', 'last_name', 'first_name', 'phone', 'patronymic', 'birthDate', 'email', 'SNILS', 'Passport')
 
 
 class UserProfileForm(UserChangeForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
-    email = forms.CharField(widget=forms.EmailInput(attrs={'readonly': True}))
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'readonly': True,
+        'class': 'px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200  w-8/12 mt-2 bg-white ml-auto'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'readonly': True,
+        'class': 'px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200  w-8/12 mt-2 bg-white ml-auto'
+        }))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'readonly': True,
+        'class': 'px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200  w-8/12 mt-2 bg-white ml-auto'
+        }))
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        'readonly': True,
+        'class': 'px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200  w-8/12 mt-2 bg-white ml-auto'}))
 
     class Meta:
         model = Users
