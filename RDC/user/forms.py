@@ -13,7 +13,7 @@ class PatientChoosingForm(forms.ModelForm):
     SNILS = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите СНИЛС'}))
     Passport = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите серию и номер паспорта'}))
     # birthCertificateNumber = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите номер свидетельства о рождении'}))
-    birth_date =  forms.CharField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения'}))
+    birth_date = forms.DateField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения'}))
 
     class Meta:
         model = Patients
