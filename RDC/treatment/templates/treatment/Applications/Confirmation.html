@@ -248,21 +248,21 @@
             <h1 class="w-1/3 text-lg">Услуга</h1>
             <input type="text" class="rounded-lg border-blue-400 px-3 py-1 border border-blue-100 focus:outline-blue-200 w-2/3 bg-white	"  v-model="selectedService"
             value={{request.service.title}} 
-            Общий анализ крови
+            "Общий анализ крови"
             />
           </div>
           <div class="flex flex-row m-2 mx-auto">
             <h1 class="w-1/3 text-lg">Врач</h1>
             <input type="text" class="rounded-lg border-blue-400 px-3 py-1 border border-blue-100 focus:outline-blue-200 w-2/3 bg-white	" v-model="selectedDoctor"
             value={{request.doctor}}
-            disabled
+            "Склифосовский Николай Васильевич"
             />
           </div>
           <div class="flex flex-row m-2 mx-auto">
             <h1 class="w-1/3 text-lg" >Лицо, получившее услугу</h1>
             <input type="text" class="rounded-lg border-blue-400 px-3 py-1 border border-blue-100 focus:outline-blue-200 w-2/3 bg-white	" v-model="recipient"
-            value="{{request.patient}}" 
-            disabled
+            value={{request.patient}} 
+            "Казаков Андрей Олегович"
             >
           </div>
           <div class="flex flex-row m-2 mx-auto">
