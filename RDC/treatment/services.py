@@ -78,11 +78,7 @@ def patient_add(request):
                 patient = Patients.objects.create(first_name=first_name, last_name=last_name, patronymic=patronymic, SNILS=SNILS,
                                       Passport=Passport, birth_date=birth_date)
                 Requests.objects.filter(user=request.user, status=2).update(patient=patient, status=3)
-        else:
-            context = {
-        'form': PatientChoosingForm(),
-        }
-            return render(request, 'treatment/Applications/WhomToServe.html', context)
+            return HttpResponseRedirect(reverse('uploadfiles'))
     else:
         if user_choice == "none":
             Requests.objects.filter(user=request.user, status=2).update(status=3)

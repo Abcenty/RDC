@@ -16,7 +16,10 @@ def service(request):
 
 
 def doctor(request):
-    current_request = Requests.objects.get(user=request.user, status=1)
+    # current_request = Requests.objects.get(user=request.user, status=1)
+    # МОГУТ ВОЗНИКНУТЬ ПРОБЛЕМЫ ИЗ-ЗА ЛОГИКИ ФИЛЬТРАЦИИ. ПРОВЕРЬ ЕЕ В СЛУЧАЕ ОШИБОК С ДОБАВЛЕНИЕМ ДОКТОРА В БД
+    # current_request = Requests.objects.filter(user=request.user, status=1).latest('request_data')
+    current_request = Requests.objects.filter(user=request.user, status=1).order_by('request_time').reverse[0]
     context = {
         'doctors': Doctors.objects.filter(services=current_request.service),
     }
@@ -38,9 +41,28 @@ def doctor(request):
 
 def whomToServe(request):
     context = {
-        'form': PatientChoosingForm(data=request.POST),
+        'form': PatientChoosingForm(instance=request.user),
     }
     return render(request, 'treatment/Applications/WhomToServe.html', context)
+
+
+"""def profile(request):
+    if request.method == "POST":
+        form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users:profile'))
+    else:
+        form = UserProfileForm(instance=request.user)
+    baskets = Basket.objects.filter(user=request.user)
+    total_quantity = sum(basket.quantity for basket in baskets)
+    total_sum = sum(basket.sum() for basket in baskets)
+    context = {'form': form,
+               'baskets': Basket.objects.filter(user=request.user),
+               'total_quantity': total_quantity,
+               'total_sum': total_sum
+               }
+    return render(request, 'users/profile.html', context)"""
 
 
 def uploadFiles(request):
