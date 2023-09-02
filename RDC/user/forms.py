@@ -105,13 +105,13 @@ class UserProfileForm(UserChangeForm):
         fields = ('username', 'email', 'first_name', 'last_name')
 
 
-class UserConfirmationForm(forms.Form):
+class UserConfirmationForm(forms.ModelForm):
     service = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
     patient = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
     doctor = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
 
 
-class Meta:
+    class Meta:
         model = Requests
         fields = ('service', 'patient', 'doctor') # 'files'
 

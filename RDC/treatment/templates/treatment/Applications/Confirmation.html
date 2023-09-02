@@ -249,29 +249,21 @@
       <div class="w-full mx-auto gap-2 max-w-screen-xl mx-auto">
         <div class="flex flex-row mx-auto">
             <h1 class="w-1/3 text-lg">Услуга</h1>
-            <input type="text" class="rounded-lg border-blue-400 px-3 py-1 border border-blue-100 focus:outline-blue-200 w-2/3 bg-white	"  v-model="selectedService"
-            value={{request.service.title}} 
-            "Общий анализ крови"
-            />
+            {{form.service}}
           </div>
           <div class="flex flex-row m-2 mx-auto">
             <h1 class="w-1/3 text-lg">Врач</h1>
-            <input type="text" class="rounded-lg border-blue-400 px-3 py-1 border border-blue-100 focus:outline-blue-200 w-2/3 bg-white	" v-model="selectedDoctor"
-            value={{request.doctor}}
-            "Склифосовский Николай Васильевич"
-            />
+            {{form.doctor}}
           </div>
           <div class="flex flex-row m-2 mx-auto">
             <h1 class="w-1/3 text-lg" >Лицо, получившее услугу</h1>
-            <input type="text" class="rounded-lg border-blue-400 px-3 py-1 border border-blue-100 focus:outline-blue-200 w-2/3 bg-white	" v-model="recipient"
-            value={{request.patient}} 
-            "Казаков Андрей Олегович"
-            >
+            {{form.patient}}
           </div>
           <div class="flex flex-row m-2 mx-auto">
             <h1 class="w-1/3 text-lg">Файлы</h1>
             <input type="text" class="rounded-lg border-blue-400 px-3 py-1 border border-blue-100 focus:outline-blue-200 w-2/3 bg-white	" v-model="selectedfiles" 
             disabled
+            value="Тут будут загруженные файлы" 
             />
           </div>
         </div>

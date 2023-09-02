@@ -73,9 +73,12 @@ def uploadFiles(request):
 
 
 def confirmation(request):
+    service = Requests.objects.get(user=request.user, status=3).service
+    patient = Requests.objects.get(user=request.user, status=3).patient
+    doctor = Requests.objects.get(user=request.user, status=3).doctor
     context = {
         'request': Requests.objects.filter(user=request.user, status=3),
-        # 'form': UserConfirmationForm(instance=request.user),
+        'form': UserConfirmationForm(initial={'service': service, 'patient': patient, 'doctor': doctor}),
     }
     return render(request, 'treatment/Applications/Confirmation.html', context)
 
