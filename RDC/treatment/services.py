@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, render, HttpResponse
 from treatment.models import Requests
 from user.models import Services, Patients
 from django.urls import reverse
@@ -18,7 +18,7 @@ def doctor_add(request):
        doctor_pk = request.POST.get('doctor', None)
        doctor = Services.objects.get(pk__in=doctor_pk)
        Requests.objects.filter(user=request.user, status=1).update(doctor=doctor, status=2)
-    return HttpResponseRedirect(reverse('whomToServe'))
+       return HttpResponseRedirect(reverse('whomToServe'))
 
 
 """def patient_add(request):
@@ -67,7 +67,7 @@ def patient_add(request):
     # не прuser_choiceкая же логика во всем контроллере
     elif user_choice == "other":
         if request.method == "POST":
-            form = PatientChoosingForm(data=request.POST)
+            form = PatientChoosingForm(data=request.POST, instance=request.POST)
             if form.is_valid():
                 first_name = request.POST.get('first_name', None)
                 last_name = request.POST.get('last_name', None)

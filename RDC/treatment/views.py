@@ -16,10 +16,10 @@ def service(request):
 
 
 def doctor(request):
-    # current_request = Requests.objects.get(user=request.user, status=1)
+    current_request = Requests.objects.get(user=request.user, status=1)
     # МОГУТ ВОЗНИКНУТЬ ПРОБЛЕМЫ ИЗ-ЗА ЛОГИКИ ФИЛЬТРАЦИИ. ПРОВЕРЬ ЕЕ В СЛУЧАЕ ОШИБОК С ДОБАВЛЕНИЕМ ДОКТОРА В БД
     # current_request = Requests.objects.filter(user=request.user, status=1).latest('request_data')
-    current_request = Requests.objects.filter(user=request.user, status=1).order_by('request_time').reverse[0]
+    # current_request = Requests.objects.filter(user=request.user, status=1).order_by('request_time').reverse[0]
     context = {
         'doctors': Doctors.objects.filter(services=current_request.service),
     }
@@ -44,6 +44,9 @@ def whomToServe(request):
         'form': PatientChoosingForm(instance=request.user),
     }
     return render(request, 'treatment/Applications/WhomToServe.html', context)
+
+
+
 
 
 """def profile(request):
