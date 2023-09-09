@@ -7,13 +7,19 @@ from treatment.models import Requests
 
 
 class PatientChoosingForm(forms.ModelForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите имя'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите фамилию'}))
-    patronymic = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите отчество'}))
-    SNILS = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите СНИЛС'}))
-    Passport = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите серию и номер паспорта'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите имя',  
+    'id': "firstNameInput"}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите фамилию',
+                                                              'id': "lastNameInput" }))
+    patronymic = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите отчество',
+                                                               'id': "patronymicInput"}))
+    SNILS = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите СНИЛС',
+                                                          'id': "snils"}))
+    Passport = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите серию и номер паспорта',
+                                                             'id': "passport"}))
     # birthCertificateNumber = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Введите номер свидетельства о рождении'}))
-    birth_date = forms.DateField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения'}))
+    birth_date = forms.DateField(widget=forms.DateTimeInput(attrs={'placeholder': 'Введите дату рождения',
+                                                                   'id': "datetime"}))
 
     class Meta:
         model = Patients

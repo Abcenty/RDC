@@ -285,7 +285,7 @@
                         </div>
                     </div>
                     
-                    <div class="flex flex-col gap-3 p-4 w-8/12 ml-auto border-2 rounded-xl border-blue-300">
+                    <!--<div class="flex flex-col gap-3 p-4 w-8/12 ml-auto border-2 rounded-xl border-blue-300">
                         <p class="pl-2 text-base text-black mr-auto">Фамилия Имя Отчество</p>
                         <div class="flex flex-row gap-3">
                             <div class="w-4/12 flex flex-col">
@@ -357,7 +357,40 @@
                             >
                             </div>
                         </div>   
-                </div>
+                </div>-->
+
+
+
+
+                <form class="flex flex-col gap-3 p-4 w-8/12 ml-auto border-2 rounded-xl border-blue-300"
+                method='post'>
+                    <p class="pl-2 text-base text-black mr-auto">Фамилия Имя Отчество</p>
+                    <div class="flex flex-row gap-3">
+                        <div class="w-4/12 flex flex-col">
+                            {{form.first_name}}
+                            <p id="lastNameError" class="text-red-500 text-xs mt-1"></p>
+                        </div>
+                        <div class="h-full w-4/12">
+                            {{form.last_name}}
+                            <p id="firstNameError" class="text-red-500 text-xs mt-1"></p>
+                        </div>
+                        <div class="w-4/12">
+                            {{form.patronymic}}
+                            <p id="middleNameError" class="text-red-500 text-xs mt-1"></p>
+                        </div>
+                    </div>
+                    <p class="pl-2 text-base text-black mr-auto">Дата рождения</p>
+                    {{form.birth_date}}
+                    <p class="pl-2 text-base text-black mr-auto">Документ удостоверяющий личность
+                    <div class="flex flex-row gap-3"></p>
+                        {{form.Passport}}
+                    </div>
+                        <p class="pl-2 text-base text-black mr-auto">Снилс</p>
+                        <div class="flex flex-row gap-3 w-full">
+                            {{form.SNILS}}
+                        </div>
+                    </div>   
+                </form>
            <!--Граница формы-->
     </div>        
 </div>
@@ -372,7 +405,7 @@
         </form>
         <form action="{% url 'patient_add' %}" target="_parent" method="post">
             {% csrf_token %}
-            <input type="hidden" id="userChoice" name="service_choice" value="">
+            <input id="userChoice" name="service_choice" value="me">
           <button
               type="submit"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
@@ -384,7 +417,7 @@
         <script>
             const lastNameInput = document.getElementById("lastNameInput");
             const firstNameInput = document.getElementById("firstNameInput");
-            const middleNameInput = document.getElementById("middleNameInput");
+            const patronymicInput = document.getElementById("patronymicInput");
             const datetimeInput = document.getElementById("datetime");
             const passportInput = document.getElementById("passport");
             const passportdateInput = document.getElementById("passport-date");
@@ -393,7 +426,7 @@
             function toggleFormFields(value) {
                 lastNameInput.disabled = (value === "me" || value === "none");
                 firstNameInput.disabled = (value === "me" || value === "none");
-                middleNameInput.disabled = (value === "me" || value === "none");
+                patronymicInput.disabled = (value === "me" || value === "none");
                 datetimeInput.disabled = (value === "me" || value === "none");
                 passportInput.disabled = (value === "me" || value === "none");
                 passportdateInput.disabled = (value === "me" || value === "none");

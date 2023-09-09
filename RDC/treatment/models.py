@@ -7,6 +7,14 @@ import datetime
 # Create your models here.
 
 
+class Researches(models.Model):
+    research_file = models.FileField(upload_to='media/')
+
+    def __str__(self):
+        return f'id = {self.id}'
+    
+
+
 class Requests(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     service = models.ForeignKey(Services, on_delete=models.CASCADE)
@@ -27,8 +35,10 @@ class Requests(models.Model):
     request_data = models.DateTimeField(auto_now_add=True)
     request_time = models.TimeField(auto_now_add=True)
     payment_data = models.DateTimeField(default='2000-01-01')
+    # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ИССЛЕДОВАНИЕ ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
+    research = models.ForeignKey(Researches, on_delete=models.CASCADE, default = 12)
+    
 
 
-class Researches(models.Model):
-    research_file = models.FileField()
-    request = models.ForeignKey(Requests, on_delete=models.CASCADE)
+
+    
