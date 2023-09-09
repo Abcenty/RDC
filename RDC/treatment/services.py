@@ -1,8 +1,8 @@
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, render, HttpResponse
-from treatment.models import Requests
+from treatment.models import Requests, Researches
 from user.models import Services, Patients
 from django.urls import reverse
-from user.forms import PatientChoosingForm
+from user.forms import PatientChoosingForm, UserResearchAddForm
 
 
 def request_add(request):
@@ -53,3 +53,16 @@ def patient_add(request):
             Requests.objects.filter(user=request.user, status=2).update(status=3)
             return HttpResponseRedirect(reverse('uploadfiles'))
     return HttpResponseRedirect(reverse('whomToServe'))
+
+
+def research_add(request):
+    if request.method == "POST":
+        form = UserResearchAddForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            # !!!  ИСПРАВЬ ФИЛЬТРАЦИИ, ОНО МОЖЕТ ВЗЯТЬ ПОСЛЕДНИЙ ЗАГРУЖЕННЫЙ, НО НЕ ОБЯЗАТЕЛЬНО ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ !!!
+            # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
+            research_file = Researches.objects.latest('id')
+            Requests.objects.filter(user=request.user, status=3).update(status=4, research=research_file)
+            
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

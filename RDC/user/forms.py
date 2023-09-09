@@ -1,9 +1,10 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django import forms
+
     
 
 from .models import Users, Patients
-from treatment.models import Requests
+from treatment.models import Requests, Researches
 
 
 class PatientChoosingForm(forms.ModelForm):
@@ -115,29 +116,17 @@ class UserConfirmationForm(forms.ModelForm):
     service = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
     patient = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
     doctor = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+    research = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
 
 
     class Meta:
         model = Requests
-        fields = ('service', 'patient', 'doctor') # 'files'
+        fields = ('service', 'patient', 'doctor', 'research') # 'files'
 
 
-
-"""    def __init__(self, *args, **kwargs):
-        super(UserRegistrationForm, self).__init__(*args, **kwargs)
-        for field_name, filed in self.fields.items():
-            filed.widget.attrs['class'] = 'form-control py-4'"""
-
-
-"""class UserProfileForm(UserChangeForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
-    email = forms.CharField(widget=forms.EmailInput(attrs={'readonly': True}))
+class UserResearchAddForm(UserChangeForm):
+    research_file = forms.FileField(widget=forms.FileInput, required=False)
 
     class Meta:
-        model = Users
-        fields = ('username', 'email', 'first_name', 'last_name')
-
-    def __init__(self, *args, **kwargs):
-        super(UserProfileForm, self).__init__(*args, **kwargs)
-        for field_name, filed in self.fields.items():
-            filed.widget.attrs['class'] = 'form-control py-4'"""
+        model = Researches
+        fields = ('research_file',)

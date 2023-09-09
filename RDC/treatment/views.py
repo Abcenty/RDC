@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from user.models import Services, Doctors, Patients
 from treatment.models import Requests
 from django.urls import reverse
-from user.forms import UserConfirmationForm, PatientChoosingForm
+from user.forms import UserConfirmationForm, PatientChoosingForm, UserResearchAddForm
 
 
 # Create your views here.
@@ -17,10 +17,11 @@ def service(request):
 
 def doctor(request):
     # current_request = Requests.objects.get(user=request.user, status=1)
-    current_request = Requests.objects.filter(user=request.user, status=1).latest('request_time')
     # МОГУТ ВОЗНИКНУТЬ ПРОБЛЕМЫ ИЗ-ЗА ЛОГИКИ ФИЛЬТРАЦИИ. ПРОВЕРЬ ЕЕ В СЛУЧАЕ ОШИБОК С ДОБАВЛЕНИЕМ ДОКТОРА В БД
     # current_request = Requests.objects.filter(user=request.user, status=1).latest('request_data')
     # current_request = Requests.objects.filter(user=request.user, status=1).order_by('request_time').reverse[0]
+    
+    current_request = Requests.objects.filter(user=request.user, status=1).latest('request_time')
     context = {
         'doctors': Doctors.objects.filter(services=current_request.service),
     }
@@ -35,21 +36,25 @@ def whomToServe(request):
 
 
 def uploadFiles(request):
-    return render(request, 'treatment/Applications/UploadFiles.html')
+    context = {
+        'form': UserResearchAddForm()
+    }
+    return render(request, 'treatment/Applications/UploadFiles.html', context)
 
 
 def confirmation(request):
     """service = Requests.objects.get(user=request.user, status=3).service
     patient = Requests.objects.get(user=request.user, status=3).patient
     doctor = Requests.objects.get(user=request.user, status=3).doctor"""
-    service = Requests.objects.filter(user=request.user, status=3).latest('request_time').service
-    patient = Requests.objects.filter(user=request.user, status=3).latest('request_time').patient
-    doctor = Requests.objects.filter(user=request.user, status=3).latest('request_time').doctor
+    service = Requests.objects.filter(user=request.user, status=4).latest('request_time').service
+    patient = Requests.objects.filter(user=request.user, status=4).latest('request_time').patient
+    doctor = Requests.objects.filter(user=request.user, status=4).latest('request_time').doctor
+    research = Requests.objects.filter(user=request.user, status=4).latest('request_time').research
     context = {
         'request': Requests.objects.filter(user=request.user, status=3),
-        'form': UserConfirmationForm(initial={'service': service, 'patient': patient, 'doctor': doctor}),
+        'form': UserConfirmationForm(initial={'service': service, 'patient': patient, 'doctor': doctor, 'research': research}),
     }
-    Requests.objects.filter(user=request.user, status=3).update(status=4)
+    Requests.objects.filter(user=request.user, status=4).update(status=5)
     return render(request, 'treatment/Applications/Confirmation.html', context)
 
 
