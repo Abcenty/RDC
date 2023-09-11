@@ -63,13 +63,13 @@
           </button>
           <ul class="menu py-2">
             <li>
-              <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
+              <a href={% url 'profile' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профиль</a>
             </li>
             <li>
-              <a href="/authorization" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
+              <a href={% url 'authorization' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
             </li>
             <li>
-              <a href="/doctor" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Кабинет врача</a>
+              <a href={% url 'doctor_cabinet' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Кабинет врача</a>
             </li>
           </ul>
         </div>
@@ -101,24 +101,26 @@
     <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" :class="mobileMenu ? 'block' : 'hidden'">
       <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
         <li>
-          <a href="DoctorsOffise.html" class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Общие заявки</a>
+          <a href={% url 'doctor_cabinet' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Общие заявки</a>
         </li>
         <li>
-          <a href="DoctorsRequests.html" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Принятые заявки</a>
+          <a href={% url 'doctors_request' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Принятые заявки</a>
         </li>
         <li>
-          <a href="CopletededReuests.html" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Завершенные заявки</a>
+          <a href={% url 'completed_request' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Завершенные заявки</a>
         </li>
       </ul>
     </div>
     <!-- Конец навигационнного меню -->
   </div>
 </nav>
-<body class="p-4">                
+<body class="p-4"> 
+    {% if requests %}               
   <div class="flex flex-col items-center max-w-screen-xl mx-auto">
     <div class="flex flex-col items-center max-w-screen-xl mr-auto">
       <h1 class="mb-4 text-2xl font-medium mr-auto">Выберите заявку</h1>
     </div>
+    {% for request in requests %}
     <div class="w-full overflow-x-auto rounded-md">
       <table class="w-full border-collapse">
         <thead>
@@ -134,12 +136,12 @@
           <tr class="border-2 border-blue-500">
             <td class="px-4 py-2">
               <p class="place-content-center flex">
-                1
+                {{request.id}}
               </p>
             </td>
             <td class="px-4 py-2">
               <p class="place-content-center flex">
-                9 Сентября 4:55
+                {{request.request_data}} {{request.request_time}}
               </p>
             </td>
             <td class="px-4 py-2 mx-2">
@@ -174,92 +176,8 @@
               <button onclick="addRequest()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex mx-auto">Принять</button> 
             </td>
           </tr>
-          <tr class="border-2 border-blue-500">
-            <td class="px-4 py-2">
-              <p class="place-content-center flex">
-                2
-              </p>
-            </td>
-            <td class="px-4 py-2">
-              <p class="place-content-center flex">
-                9 Сентября 5:02
-              </p>
-            </td>
-            <td class="px-4 py-2 mx-2">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Данные по заявке" onclick="toggleForm(2)"> 
-              <!-- Если вот в эту строку toggleForm(2), вместо 2, передать id, то код должен прекрасно работать -->
-              <div id="formContainer2" class="hidden fixed z-100 w-full">
-                <form>
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
-                    <textarea class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled>Какое-то очень длинное описание, добавленное для доказательства того, что поле автоматически увеличивает свою высоту</textarea>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled>
-                  </div>
-                </form>
-              </div>
-            </td>
-            <td class="px-4 py-2 ">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(2)">
-              <!-- Если вот в эту строку toggleForm(2), вместо 2, передать id, то код должен прекрасно работать -->
-              <div id="fileContainer2" class="hidden fixed z-100 w-3/12">
-                <form>
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
-                  </div>
-                </form>
-              </div>
-            </td>
-            <td class="px-4 py-2"> 
-              <button onclick="addRequest()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex mx-auto">Принять</button>
-            </td>
-          </tr>
-          <tr class="border-2 border-blue-500">
-            <td class="px-4 py-2">
-              <p class="place-content-center flex">
-                3
-              </p>
-            </td>
-            <td class="px-4 py-2">
-              <p class="place-content-center flex">
-                9 Сентября 5:17
-              </p>
-            </td>
-            <td class="px-4 py-2 mx-2">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Данные по заявке" onclick="toggleForm(3)"> 
-              <!-- Если вот в эту строку toggleForm(3), вместо 3, передать id, то код должен прекрасно работать -->
-              <div id="formContainer3" class="hidden fixed z-100 w-full">
-                <form>
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
-                    <textarea class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled>Какое-то очень длинное описание, добавленное для доказательства того, что поле автоматически увеличивает свою высоту</textarea>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled>
-                  </div>
-                </form>
-              </div>
-            </td>
-            <td class="px-4 py-2 ">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(3)">
-              <!-- Если вот в эту строку toggleForm(3), вместо 3, передать id, то код должен прекрасно работать -->
-              <div id="fileContainer3" class="hidden fixed z-100 w-3/12">
-                <form>
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
-                  </div>
-                </form>
-              </div>
-            </td>
-            <td class="px-4 py-2"> 
-              <button onclick="addRequest()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex mx-auto">Принять</button>
-            </td>
-          </tr>
+          {% endfor %}
+          {% endif %}
         </tbody>
       </table>
       <!-- <div class="w-full overflow-x-auto">

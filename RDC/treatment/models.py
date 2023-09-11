@@ -36,7 +36,7 @@ class Requests(models.Model):
 
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ДОКТОРА С ПОЛЯМИ DEFAULT И УКАЗЫВАЙ ЕГО ID В default
     doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE, default=2)
-    request_data = models.DateTimeField(auto_now_add=True)
+    request_data = models.DateField(auto_now_add=True)
     request_time = models.TimeField(auto_now_add=True)
     payment_data = models.DateTimeField(default='2000-01-01')
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ИССЛЕДОВАНИЕ ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default

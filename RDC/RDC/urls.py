@@ -47,7 +47,7 @@ urlpatterns = [
     path('doctor_cabinet/', doctor_cabinet, name='doctor_cabinet'),
     path('doctors_request/', doctors_request, name='doctors_request'),
     path('analysis_request/', analysis_request, name='analysis_request'),
-    path('completed_request', completed_request, name='completed_request'),
+    path('completed_request/', completed_request, name='completed_request'),
 
     path('activate/<str:uidb64>/<str:token>/', activate_account, name='activate'),
     path('alert/', alert, name='alert'),
