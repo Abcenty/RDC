@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponseRedirect, get_object_or_404, render, HttpResponse
+from django.shortcuts import HttpResponseRedirect
 from treatment.models import Requests, Researches
 from user.models import Services, Patients
 from django.urls import reverse
@@ -63,6 +63,5 @@ def research_add(request):
             # !!!  ИСПРАВЬ ФИЛЬТРАЦИИ, ОНО МОЖЕТ ВЗЯТЬ ПОСЛЕДНИЙ ЗАГРУЖЕННЫЙ, НО НЕ ОБЯЗАТЕЛЬНО ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ !!!
             # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
             research_file = Researches.objects.latest('id')
-            Requests.objects.filter(user=request.user, status=3).update(status=4, research=research_file)
-            
+            Requests.objects.filter(user=request.user, status=3).update(research=research_file)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

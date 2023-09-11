@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from user.models import Services, Patients
-from treatment.models import Requests
+from treatment.models import Requests, Researches
 from django.urls import reverse
 from user.forms import UserConfirmationForm, PatientChoosingForm, UserResearchAddForm
 from doctor_cabinet.models import Doctors
@@ -47,6 +47,7 @@ def confirmation(request):
     """service = Requests.objects.get(user=request.user, status=3).service
     patient = Requests.objects.get(user=request.user, status=3).patient
     doctor = Requests.objects.get(user=request.user, status=3).doctor"""
+    Requests.objects.filter(user=request.user, status=3).update(status=4)
     service = Requests.objects.filter(user=request.user, status=4).latest('request_time').service
     patient = Requests.objects.filter(user=request.user, status=4).latest('request_time').patient
     doctor = Requests.objects.filter(user=request.user, status=4).latest('request_time').doctor
@@ -55,11 +56,11 @@ def confirmation(request):
         'request': Requests.objects.filter(user=request.user, status=3),
         'form': UserConfirmationForm(initial={'service': service, 'patient': patient, 'doctor': doctor, 'research': research}),
     }
-    Requests.objects.filter(user=request.user, status=4).update(status=5)
     return render(request, 'treatment/Applications/Confirmation.html', context)
 
 
 def payment(request):
+    Requests.objects.filter(user=request.user, status=4).update(status=5)
     return render(request, 'treatment/Applications/Payment.html')
 
 
