@@ -22,6 +22,7 @@ from django.urls import path
 from treatment.views import service, doctor, payment, whomToServe, uploadedfiles, uploadFiles, confirmation, services
 from user.views import authorization, registration, activate_account, profile, alert
 from treatment.services import request_add, doctor_add, patient_add, research_add
+from doctor_cabinet.views import doctor_cabinet, doctors_request, analysis_request, completed_request
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,6 +43,11 @@ urlpatterns = [
     path('doctor_add/', doctor_add, name='doctor_add'),
     path('patient_add', patient_add, name='patient_add'),
     path('research_add', research_add, name='research_add'),
+
+    path('doctor_cabinet/', doctor_cabinet, name='doctor_cabinet'),
+    path('doctors_request/', doctors_request, name='doctors_request'),
+    path('analysis_request/', analysis_request, name='analysis_request'),
+    path('completed_request', completed_request, name='completed_request'),
 
     path('activate/<str:uidb64>/<str:token>/', activate_account, name='activate'),
     path('alert/', alert, name='alert'),
