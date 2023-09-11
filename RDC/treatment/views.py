@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect
-from user.models import Services, Doctors, Patients
+from user.models import Services, Patients
 from treatment.models import Requests
 from django.urls import reverse
 from user.forms import UserConfirmationForm, PatientChoosingForm, UserResearchAddForm
+from doctor_cabinet.models import Doctors
 
 
 # Create your views here.

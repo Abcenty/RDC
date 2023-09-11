@@ -1,6 +1,6 @@
 from django.db import models
-from user.models import Users, Patients, Services, Doctors
-import datetime
+from user.models import Users, Patients, Services
+from doctor_cabinet.models import Doctors
 
 
 
