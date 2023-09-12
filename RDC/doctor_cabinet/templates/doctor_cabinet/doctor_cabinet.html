@@ -146,9 +146,9 @@
             </td>
             <td class="px-4 py-2 mx-2">
               <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
-               value="Данные по заявке" onclick="toggleForm({{request.research.id}})">
+               value="Данные по заявке" onclick="toggleForm({{request.id}})">
               <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
-              <div id="formContainer{{request.research.id}}" class="hidden fixed z-100 w-full">
+              <div id="formContainer{{request.id}}" class="hidden fixed z-100 w-full">
                   <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
                     <input class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled
                     value="{{request.service.title}}">
