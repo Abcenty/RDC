@@ -20,21 +20,21 @@ class Requests(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     service = models.ForeignKey(Services, on_delete=models.CASCADE)
 
-    # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ПАЦИЕНТА С ПОЛЯМИ DEFAULT И УКАЗЫВАЙ ЕГО ID В default
+    # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ПАЦИЕНТА ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE, default=1)
 
     # Может возникнуть ошибка, если один пользователь создаст два запроса, которые одновременно будут иметь один статус с 1 по 4
     
     # ИСПРАВЬ ОШИБКУ С НАЖАТИЕМ КНОПКИ "НАЗАД" (НУЖНО МЕНЯТЬ СТАТУС ОБРАТНО ПРИ ПЕРЕХОДЕ)
 
+    # НА СТРАНИЦЕ АНАЛИЗА НУЖНО, ЧТОБЫ ЛЮБОЙ ПЕРЕХОД НА ДРУГУЮ СТРАНИЦУ МЕНЯЛ СТАТУС ЗАЯВКИ
+
     status = models.IntegerField(
         default=1)  # 0 - ошибка оплаты, 1 - новый запрос, 2 - выбран врач, 3 - выбран пациент, ожидает исследования
     # 4 - ожидает подтверждения пользователя 5 - ожидает оплаты, 6 - оплачено, ожидает подтверждение от врача,
-    # 7 - в работе, 8 - выполнена, 9 - отклонена
+    # 7 - в работе, 8 - в процессе анализа, 9 - выполнена, 10 - отклонена
 
-    # СТАТУСЫ 3 И 4 ПОД ВОПРОСОМ, ИХ ВОЗМОЖНО ПРИДЕТСЯ ИЗМЕНИТЬ, ОБРАТИ ВНИМАНИЕ ПРИ ПРОПИСЫВАНИИ ЛОГИКИ ДОБАВЛЕНИЯ ФАЙЛОВ
-
-    # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ДОКТОРА С ПОЛЯМИ DEFAULT И УКАЗЫВАЙ ЕГО ID В default
+    # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ДОКТОРА ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
     doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE, default=2)
     request_data = models.DateField(auto_now_add=True)
     request_time = models.TimeField(auto_now_add=True)

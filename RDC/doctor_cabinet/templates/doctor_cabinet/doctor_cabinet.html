@@ -101,7 +101,7 @@
     <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" :class="mobileMenu ? 'block' : 'hidden'">
       <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
         <li>
-          <a href={% url 'doctor_cabinet' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Общие заявки</a>
+          <a href={% url 'doctor_cabinet' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Новые заявки</a>
         </li>
         <li>
           <a href={% url 'doctors_request' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Принятые заявки</a>
@@ -186,8 +186,6 @@
                       Добавить
                     </button>
                   </form> 
-              <!--<button onclick="addRequest({{request.research.id}})" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex mx-auto">Принять</button>-->
-              <!--<button onclick="{% url 'request_accept' request.id %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex mx-auto">Принять</button>-->
             </td>
           </tr>
           {% endfor %}

@@ -101,7 +101,7 @@
     <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" :class="mobileMenu ? 'block' : 'hidden'">
         <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
           <li>
-            <a href={% url 'doctor_cabinet' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Общие заявки</a>
+            <a href={% url 'doctor_cabinet' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Новые заявки</a>
           </li>
           <li>
             <a href={% url 'doctors_request' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Принятые заявки</a>
@@ -114,7 +114,8 @@
     <!-- Конец навигационнного меню -->
   </div>
 </nav>
-<body class="p-4">  
+<body class="p-4">
+    {% if requests %}  
     <ol class="justify-evenly flex items-center px-3 py-1 space-x-2 text-sm font-medium text-center text-gray-500 bg-white w-4/12 border border-gray-200 rounded-lg shadow-sm m-4 mx-auto">
         <li class="flex items-center py-3">
           <span
@@ -165,90 +166,63 @@
               </tr>
             </thead>
             <tbody>
+                {% for request in requests %}
               <tr class="border-2 border-blue-500">
                 <td class="px-4 py-2">
                   <p class="place-content-center flex">
-                    1
+                    {{request.id}}
                   </p>
                 </td>
                 <td class="px-4 py-2">
                   <p class="place-content-center flex">
-                    9 Сентября 4:55
+                    {{request.request_data}}
                   </p>
                 </td>
                 <td class="px-4 py-2 mx-2">
-                  <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Данные по заявке" onclick="toggleForm(1)">
-                  <div id="formContainer1" class="hidden fixed z-100 w-full">
-                    <form class="">
-                      <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
-                        <textarea class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled>Какое-то очень длинное описание, добавленное для доказательства того, что поле автоматически увеличивает свою высоту</textarea>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled>
-                      </div>
-                    </form>
+                  <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
+                   value="Данные по заявке" onclick="toggleForm({{request.id}})">
+                  <div id="formContainer{{request.id}}" class="hidden fixed z-100 w-full">
+                        <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
+                            <input class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled
+                            value="{{request.service.title}}">
+                            <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled
+                            value={{request.patient.first_name}}>
+                            <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled
+                            value={{request.patient.last_name}}>
+                            <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled
+                            value={{request.patient.patronymic}}>
+                            <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled
+                            value={{request.patient.Passport}}>
+                            <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled
+                            value={{request.patient.SNILS}}>
+                          </div>
                   </div>
                 </td>
                 <td class="px-4 py-2 ">
-                  <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(1)">
-                  <div id="fileContainer1" class="hidden fixed z-100 w-3/12">
-                    <form>
-                      <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                        <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                        <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
-
-                      </div>
-                    </form>
-                  </div>
-                </td>
-                <td class="px-4 py-2"> 
-                    <a href="AnalysisRequest.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-36 place-content-center rounded flex mx-auto">Продолжить</a> 
-                </td>
-              </tr>
-              <tr class="border-2 border-blue-500">
-                <td class="px-4 py-2">
-                  <p class="place-content-center flex">
-                    2
-                  </p>
+                    <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
+                    value="Файлы" onclick="toggleFile({{request.research.id}})">
+                   <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
+                   <div id="fileContainer{{request.research.id}}" class="hidden fixed z-100 w-3/12">
+                       <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
+                         {% if request.research %}
+                         <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.research}}</a>
+                         {% endif %}
+                       </div>
+                   </div>
                 </td>
                 <td class="px-4 py-2">
-                  <p class="place-content-center flex">
-                    9 Сентября 4:55
-                  </p>
-                </td>
-                <td class="px-4 py-2 mx-2">
-                  <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Данные по заявке" onclick="toggleForm(2)"> 
-                  <!-- Если вот в эту строку toggleForm(2), вместо 2, передать id, то код должен прекрасно работать -->
-                  <div id="formContainer2" class="hidden fixed z-100 w-full">
-                    <form>
-                      <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
-                        <textarea class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled>Какое-то очень длинное описание, добавленное для доказательства того, что поле автоматически увеличивает свою высоту</textarea>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled>
-                        <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled>
-                      </div>
-                    </form>
-                  </div>
-                </td>
-                <td class="px-4 py-2 ">
-                  <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(2)">
-                  <div id="fileContainer2" class="hidden fixed z-100 w-3/12">
-                    <form>
-                      <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                        <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                        <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
-                      </div>
-                    </form>
-                  </div>
-                </td>
-                <td class="px-4 py-2"> 
-                  <a href="AnalysisRequest.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-36 place-content-center rounded flex mx-auto">Продолжить</a> 
+                    <form action="{% url 'continue_analysis' request.id %}" target="_parent">
+                        <button
+                            type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                        >
+                          Продолжить
+                        </button>
+                      </form> 
                 </td>
               </tr>
+              {% endfor %}
+          {% endif %}
             </tbody>
           </table>
       <!-- <div class="w-full overflow-x-auto">
