@@ -37,23 +37,25 @@ def patient_add(request):
     # не прuser_choiceкая же логика во всем контроллере
     elif user_choice == "other":
         if request.method == "POST":
-            form = PatientChoosingForm(data=request.POST, instance=request.POST)
-            if form.is_valid():
-                first_name = request.POST.get('first_name', None)
-                last_name = request.POST.get('last_name', None)
-                patronymic = request.POST.get('patronymic', None)
-                SNILS = request.POST.get('SNILS', None)
-                Passport = request.POST.get('Passport', None)
-                birth_date = request.POST.get('birth_date', None)
-                patient = Patients.objects.create(first_name=first_name, last_name=last_name, patronymic=patronymic, SNILS=SNILS,
+            form = PatientChoosingForm(data=request.POST)
+            # if form.is_valid():
+            first_name = request.POST.get('first_name', None)
+            last_name = request.POST.get('last_name', None)
+            patronymic = request.POST.get('patronymic', None)
+            SNILS = request.POST.get('SNILS', None)
+            Passport = request.POST.get('Passport', None)
+            birth_date = request.POST.get('birth_date', None)
+            # form.save()
+            patient = Patients.objects.create(first_name=first_name, last_name=last_name, patronymic=patronymic, SNILS=SNILS,
                                       Passport=Passport, birth_date=birth_date)
-                Requests.objects.filter(user=request.user, status=2).update(patient=patient, status=3)
+                
+            Requests.objects.filter(user=request.user, status=2).update(patient=patient, status=3)
             return HttpResponseRedirect(reverse('uploadfiles'))
     else:
         if user_choice == "none":
             Requests.objects.filter(user=request.user, status=2).update(status=3)
             return HttpResponseRedirect(reverse('uploadfiles'))
-    return HttpResponseRedirect(reverse('whomToServe'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def research_add(request):

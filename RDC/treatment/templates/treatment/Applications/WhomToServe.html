@@ -56,20 +56,16 @@
               <span class="caret"></span>
             </button>
             <ul class="menu py-2">
-                <li>
-                  <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
-                </li>
-                <li>
-                    <a href={% url 'profile' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профиль</a>
-                </li>
-                <li>
-                  <a href={% url 'authorization' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
-                </li>
-                <!--Раскомментить, если пользователь - врач-->
-                <!--<li>
-                  <a href="/doctor" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Кабинет врача</a>
-                </li>-->
-              </ul>
+              <li>
+                <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
+              </li>
+              <li>
+                <a href="/authorization" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
+              </li>
+              <li>
+                <a href="/doctor" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Кабинет врача</a>
+              </li>
+            </ul>
           </div>
         </div>
       <button
@@ -95,24 +91,24 @@
       </button>
     </div>
     <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" :class="mobileMenu ? 'block' : 'hidden'">
-        <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
-          <li>
-            <a href={% url 'service' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Заявки</a>
-          </li>
-          <li>
-            <a href={% url 'services' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Услуги</a>
-          </li>
-          <li>
-            <a href={% url 'uploadedfiles' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Загруженные файлы</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Протоколы</a>
-          </li>
-          <li>
-            <a href={% url 'payment' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Оплата</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+        <li>
+          <a href="/" class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Заявки</a>
+        </li>
+        <li>
+          <a href="/services" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Услуги</a>
+        </li>
+        <li>
+          <a href="/uploadedfiles" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Загруженные файлы</a>
+        </li>
+        <li>
+          <a href="/protocols" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Протоколы</a>
+        </li>
+        <li>
+          <a href="/payment" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Оплата</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
     <div class="p-4">
@@ -244,23 +240,23 @@
 {% block content %}
 
                    
-        <div class="justify-evenly flex items-center max-w-screen-xl flex-col space-x-2 text-sm font-medium text-center text-gray-500 bg-white shadow-sm m-4 mx-auto">
-        <div class="flex flex-row mx-auto w-full">
-            <div class="flex flex-col gap-2 mx-auto w-full">
-                <h1 class="mb-4 text-2xl font-medium mr-auto text-black">Кому оказать услугу</h1>
-                <div class="flex flex-row w-full">
-                    <div class="flex flex-col gap-2 text-black text-base font-normal">
-                        <div class="flex flex-row gap-2">
-                            <input
-                                id="me"
-                                type="radio"
-                                name="service_choice"
-                                value="me"
-                                placeholder="me"
-                                class="w-5 h-5 rounded-full mt-0.5"
-                                onclick="toggleFormFields('me')"
-                            >
-                            Мне
+  <div class="justify-evenly flex items-center max-w-screen-xl flex-col space-x-2 text-sm font-medium text-center text-gray-500 bg-white shadow-sm m-4 mx-auto">
+    <div class="flex flex-row mx-auto w-full">
+        <div class="flex flex-col gap-2 mx-auto w-full">
+            <h1 class="mb-4 text-2xl font-medium mr-auto text-black">Кому оказать услугу</h1>
+            <div class="flex flex-row w-full">
+                <div class="flex flex-col gap-2 text-black text-base font-normal">
+                    <div class="flex flex-row gap-2">
+                        <input
+                            id="me"
+                            type="radio"
+                            name="service_choice"
+                            value="me"
+                            placeholder="me"
+                            class="w-5 h-5 rounded-full mt-0.5"
+                            onclick="toggleFormFields('me')"
+                        >
+                        Мне
                         </div>
                         <div class="flex flex-row gap-2">
                             <input
@@ -285,94 +281,16 @@
                             Не указывать персональные данные
                         </div>
                     </div>
-                    
-                    <!--<div class="flex flex-col gap-3 p-4 w-8/12 ml-auto border-2 rounded-xl border-blue-300">
-                        <p class="pl-2 text-base text-black mr-auto">Фамилия Имя Отчество</p>
-                        <div class="flex flex-row gap-3">
-                            <div class="w-4/12 flex flex-col">
-                                <input
-                                    id="lastNameInput"
-                                    type="text"
-                                    placeholder="Фамилия"
-                                    class="px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-full bg-white"
-                                    required pattern="[А-Яа-яA-Za-zЁё]+"
-                                    disabled
-                                >
-                                <p id="lastNameError" class="text-red-500 text-xs mt-1"></p>
-                            </div>
-                            <div class="h-full w-4/12">
-                                <input
-                                    id="firstNameInput"
-                                    type="text"
-                                    placeholder="Имя"
-                                    class="px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-full bg-white" 
-                                    required pattern="[А-Яа-яA-Za-zЁё]+"
-                                    disabled
-                                >
-                                <p id="firstNameError" class="text-red-500 text-xs mt-1"></p>
-                            </div>
-                            <div class="w-4/12">
-                                <input
-                                    id="middleNameInput"
-                                    type="text"
-                                    placeholder="Отчество"
-                                    class="px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-full bg-white" 
-                                    required pattern="[А-Яа-яA-Za-zЁё]+"
-                                    disabled
-                                >
-                                <p id="middleNameError" class="text-red-500 text-xs mt-1"></p>
-                            </div>
-                        </div>
-                        <p class="pl-2 text-base text-black mr-auto">Дата рождения</p>
-                        <input
-                            type="date"
-                            id="datetime"
-                            placeholder="Дата рождения"
-                            class="px-4 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-full bg-white"
-                            disabled
-                        >
-                        <p class="pl-2 text-base text-black mr-auto">Документ удостоверяющий личность
-                        <div class="flex flex-row gap-3"></p>
-                            <input
-                            id="passport"
-                            type="text"
-                            placeholder="Серия и номер паспорта"
-                            class="px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-6/12 bg-white"
-                            disabled
-                            >
-                            <input
-                                id="passport-date"
-                                type="date"
-                                class="px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-6/12 bg-white"
-                                disabled
-                            >
-                        </div>
-                            <p class="pl-2 text-base text-black mr-auto">Снилс</p>
-                            <div class="flex flex-row gap-3 w-full">
-                            <input
-                                id="snils"
-                                type="text"
-                                placeholder="Снилс"
-                                class="px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-4/12 bg-white"
-                                disabled
-                            >
-                            </div>
-                        </div>   
-                </div>-->
-
-
-
-
-                <form class="flex flex-col gap-3 p-4 w-8/12 ml-auto border-2 rounded-xl border-blue-300"
+                    <!-- <form class="flex flex-col gap-3 p-4 w-8/12 ml-auto border-2 rounded-xl border-blue-300"
                 method='post'>
                     <p class="pl-2 text-base text-black mr-auto">Фамилия Имя Отчество</p>
                     <div class="flex flex-row gap-3">
                         <div class="w-4/12 flex flex-col">
-                            {{form.first_name}}
+                          {{form.last_name}}
                             <p id="lastNameError" class="text-red-500 text-xs mt-1"></p>
                         </div>
                         <div class="h-full w-4/12">
-                            {{form.last_name}}
+                            {{form.first_name}}
                             <p id="firstNameError" class="text-red-500 text-xs mt-1"></p>
                         </div>
                         <div class="w-4/12">
@@ -391,10 +309,53 @@
                             {{form.SNILS}}
                         </div>
                     </div>   
-                </form>
-           <!--Граница формы-->
-    </div>        
-</div>
+                </form> -->
+                
+                    <form class="flex flex-col gap-3 p-4 w-8/12 ml-auto border-2 rounded-xl border-blue-300" method="post"
+                    action="{% url 'patient_add' %}">
+                    {% csrf_token %}
+                        <p class="pl-2 text-base text-black mr-auto">Фамилия Имя Отчество</p>
+                        <div class="flex flex-row gap-3">
+                            <div class="w-4/12 flex flex-col">
+                              {{form.last_name}}
+                              <p id="lastNameError" class="text-red-500 text-xs mt-1"></p>
+                            </div>
+                            <div class="h-full w-4/12">
+                              {{form.first_name}}
+                              <p id="firstNameError" class="text-red-500 text-xs mt-1"></p>
+                            </div>
+                            <div class="w-4/12">
+                              {{form.patronymic}}
+                              <p id="middleNameError" class="text-red-500 text-xs mt-1"></p>
+                            </div>
+                        </div>
+                        <p class="pl-2 text-base text-black mr-auto">Дата рождения</p>
+                        {{form.birth_date}}
+                         <p class="pl-2 text-base text-black mr-auto">Документ удостоверяющий личность</p>
+                        <div class="flex flex-row gap-3">
+                          {{form.Passport}}
+                            {% comment %} <input
+                                id="passport-date"
+                                type="date"
+                                class="px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-6/12 bg-white"
+                                disabled
+                            >  {% endcomment %}
+                        </div> 
+                             <p class="pl-2 text-base text-black mr-auto">Снилс</p>
+                            <div class="flex flex-row gap-3 w-full">
+                              {{form.SNILS}}
+                            </div> 
+                            <input  id="userChoice" name="service_choice" value="">
+                            <button
+                                type="submit"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                            >
+                              Далее
+                            </button>
+                        </form>
+                </div>
+            </div>
+    </div>
     <div class="items-center w-full mx-auto flex flex-row justify-between pt-8">
         <form action="{% url 'doctor' %}" target="_parent">
           <button
@@ -404,25 +365,18 @@
               Назад
           </button>
         </form>
-        <form action="{% url 'patient_add' %}" target="_parent" method="post">
-            {% csrf_token %}
-            <input id="userChoice" name="service_choice">
-          <button
-              type="submit"
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
-          >
-            Далее
-          </button>
-        </form>
+        {% comment %} <form action="{% url 'patient_add' %}" target="_parent" method="post">
+           
+        </form> {% endcomment %}
       </div>
         <script>
             const lastNameInput = document.getElementById("lastNameInput");
             const firstNameInput = document.getElementById("firstNameInput");
-            const patronymicInput = document.getElementById("patronymicInput");
+            const patronymicInput = document.getElementById("middleNameInput");
             const datetimeInput = document.getElementById("datetime");
             const passportInput = document.getElementById("passport");
-            const passportdateInput = document.getElementById("passport-date");
-            const snilsInput = document.getElementById("snils");
+            {% comment %} const passportdateInput = document.getElementById("passport-date"); {% endcomment %}
+            const snilsInput = document.getElementById("snils"); 
         
             function toggleFormFields(value) {
                 lastNameInput.disabled = (value === "me" || value === "none");
@@ -430,17 +384,17 @@
                 patronymicInput.disabled = (value === "me" || value === "none");
                 datetimeInput.disabled = (value === "me" || value === "none");
                 passportInput.disabled = (value === "me" || value === "none");
-                passportdateInput.disabled = (value === "me" || value === "none");
-                snilsInput.disabled = (value === "me" || value === "none") 
+                {% comment %} passportdateInput.disabled = (value === "me" || value === "none");  {% endcomment %}
+                snilsInput.disabled = (value === "me" || value === "none")
 
                 if (value === "none") {
                     lastNameInput.value = "";
                     firstNameInput.value = "";
-                    middleNameInput.value = "";
+                    patronymicInput.value = "";
                     datetimeInput.value = "";
-                    passportInput.value = "";
-                    passportdateInput.value = "";
-                    snilsInput.value = "";
+                    passportInput.value = ""; 
+                    {% comment %} passportdateInput.value = "";  {% endcomment %}
+                    snilsInput.value = ""; 
                 }
                 const userChoiceField = document.getElementById("userChoice");
                 userChoiceField.value = value;

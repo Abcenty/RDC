@@ -38,7 +38,7 @@ class Requests(models.Model):
     doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE, default=2)
     request_data = models.DateField(auto_now_add=True)
     request_time = models.TimeField(auto_now_add=True)
-    payment_data = models.DateTimeField(default='2000-01-01')
+    payment_data = models.DateField(default='2000-01-01')
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ИССЛЕДОВАНИЕ ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
     research = models.ForeignKey(Researches, on_delete=models.CASCADE, default = 12)
     

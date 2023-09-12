@@ -24,15 +24,15 @@ class Users(AbstractUser):
     Passport = models.CharField(max_length=10)
 
 class Patients(models.Model):
-    last_name = models.CharField(max_length=32)
-    first_name = models.CharField(max_length=32)
-    patronymic = models.CharField(max_length=32)
-    birth_date = models.DateField(default='2000-01-01')
+    last_name = models.CharField(max_length=32, blank=True)
+    first_name = models.CharField(max_length=32, blank=True)
+    patronymic = models.CharField(max_length=32, blank=True)
+    birth_date = models.DateField(default='2000-01-01', blank=True)
     SNILS = models.CharField(max_length=11, blank=True)
-    Passport = models.CharField(max_length=10)
+    Passport = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
-        return f'{self.last_name} {self.first_name} {self.patronymic} | id = {self.id}'
+        return f'{self.last_name} {self.first_name} {self.patronymic}'
 
 
 
