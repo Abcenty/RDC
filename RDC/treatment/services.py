@@ -3,6 +3,7 @@ from treatment.models import Requests, Researches
 from user.models import Services, Patients
 from django.urls import reverse
 from user.forms import PatientChoosingForm, UserResearchAddForm
+from datetime import date
 
 
 def request_add(request):
@@ -64,4 +65,9 @@ def research_add(request):
             # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
             research_file = Researches.objects.latest('id')
             Requests.objects.filter(user=request.user, status=3).update(research=research_file)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def pay(request):
+    Requests.objects.filter(user=request.user, status=5).update(status=6, payment_data=date.today())
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
