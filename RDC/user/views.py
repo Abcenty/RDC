@@ -12,8 +12,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import get_user_model
 from django.http import HttpResponseBadRequest
 from django.http import JsonResponse
+from user.models import Users
 
 User = get_user_model()
+
 
 def authorization(request):
     if request.method == "POST":
@@ -25,12 +27,11 @@ def authorization(request):
             user = auth.authenticate(username=username, email=email, password=password)
             if user and user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('service'))
+                return HttpResponseRedirect(reverse('profile'))
     else:
         form = UserLoginForm()
     context = {'form': form}
     return render(request, 'user/Authorization/authorization.html', context)
-
 
 
 """def registration(request):
@@ -44,6 +45,7 @@ def authorization(request):
         form = UserRegistrationForm()
     context = {'form': form}
     return render(request, 'user/Registration/registration.html', context)"""
+
 
 def registration(request):
     if request.method == "POST":
@@ -82,8 +84,10 @@ def profile(request):
     form = UserProfileForm(instance=request.user)
     context = {
         'form': form,
+        'user': Users.objects.get(id=request.user.id)
                }
     return render(request, 'user/profile/profile.html', context)
+
 
 def activate_account(request, uidb64, token):
     try:
@@ -115,5 +119,6 @@ def register_view(request):
     else:
         return JsonResponse({'message': 'Метод не разрешен'}, status=405)
     
+
 def alert(request):
     return render(request, 'user/alert.html')

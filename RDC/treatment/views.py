@@ -75,7 +75,11 @@ def services(request):
 
 
 def uploadedfiles(request):
-    return render(request, 'treatment/UploadedFiles/uploadedfiles.html')
+    context = {
+        'requests': Requests.objects.filter(user=request.user),
+        'researches': Researches.objects.all(),
+    }
+    return render(request, 'treatment/UploadedFiles/uploadedfiles.html', context)
 
 
 

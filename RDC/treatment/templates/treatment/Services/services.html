@@ -56,16 +56,20 @@
               <span class="caret"></span>
             </button>
             <ul class="menu py-2">
-              <li>
-                <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
-              </li>
-              <li>
-                <a href="/authorization" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
-              </li>
-              <li>
-                <a href="/doctor" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Кабинет врача</a>
-              </li>
-            </ul>
+                <li>
+                  <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
+                </li>
+                <li>
+                    <a href={% url 'profile' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профиль</a>
+                </li>
+                <li>
+                  <a href={% url 'authorization' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
+                </li>
+                <!--Раскомментить, если пользователь - врач-->
+                <!--<li>
+                  <a href="/doctor" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Кабинет врача</a>
+                </li>-->
+              </ul>
           </div>
         </div>
       <button

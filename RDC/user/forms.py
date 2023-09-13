@@ -11,8 +11,7 @@ class PatientChoosingForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите имя',
                                                                "type": 'text',
                                                                "class": "px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-full bg-white",
-                                                               "id": "firstNameInput",
-                                                               "name": "firstNameInput"}))
+                                                               "id": "firstNameInput"}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Введите фамилию',
                                                                "type": 'text',
                                                               "class": "px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-full bg-white",

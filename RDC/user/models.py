@@ -22,6 +22,8 @@ class Users(AbstractUser):
     # phone = models.CharField(max_length=11, default='89000000000')
     SNILS = models.CharField(max_length=11, blank=True)
     Passport = models.CharField(max_length=10)
+    # 0 - обычный пользователь, 1 - доктор
+    is_doctor = models.BooleanField(default=0)
 
 class Patients(models.Model):
     last_name = models.CharField(max_length=32, blank=True)
