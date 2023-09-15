@@ -42,7 +42,6 @@ class Requests(models.Model):
     payment_data = models.DateField(default='2000-01-01')
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ИССЛЕДОВАНИЕ ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
     research = models.ForeignKey(Researches, on_delete=models.CASCADE, default = 12)
-    doctors_comment = models.TextField(blank=True)
     
 
 
