@@ -1,8 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django import forms
-
-    
-
 from .models import Users, Patients
 from treatment.models import Requests, Researches
 

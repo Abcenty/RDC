@@ -255,7 +255,14 @@
                     }
                   </script>
                   
-                <input type="button" value="Отправить" class="border py-2 px-4 rounded-lg border-blue-500">
+                  <form action="{% url 'complete_analysis' request.id %}" target="_parent">
+                    <button
+                        type="submit"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                    >
+                      Отправить
+                    </button>
+                  </form> >
             </div>
         </div>
         {% endfor %}

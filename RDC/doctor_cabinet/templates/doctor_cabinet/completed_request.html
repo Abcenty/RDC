@@ -114,7 +114,8 @@
     <!-- Конец навигационнного меню -->
   </div>
 </nav>
-<body class="p-4">                
+<body class="p-4">
+    {% if requests %}                
   <div class="flex flex-col items-center max-w-screen-xl mx-auto">
     <div class="flex flex-col items-center max-w-screen-xl mr-auto">
       <h1 class="mb-4 text-2xl font-medium mr-auto">Выберите заявку</h1>
@@ -122,6 +123,7 @@
     <div class="w-full overflow-x-auto rounded-md">
       <table class="w-full border-collapse">
         <thead>
+            
           <tr class="border-2 border-blue-500">
             <th class="px-4 py-2 w-1/12">ID</th>
             <th class="px-4 py-2 w-2/12">Дата</th>
@@ -132,15 +134,16 @@
           </tr>
         </thead>
         <tbody>
+            {% for request in requests %}
           <tr class="border-2 border-blue-500">
             <td class="px-4 py-2">
               <p class="place-content-center flex">
-                1
+                {{request.id}}
               </p>
             </td>
             <td class="px-4 py-2">
               <p class="place-content-center flex">
-                9 Сентября 4:55
+                {{request.request_data}}
               </p>
             </td>
             <td class="px-4 py-2 mx-2">
@@ -149,155 +152,63 @@
               <div id="formContainer1" class="hidden fixed z-100 w-full">
                 <form>
                   <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
-                    <textarea class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled>Какое-то очень длинное описание, добавленное для доказательства того, что поле автоматически увеличивает свою высоту</textarea>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled>
+                    <input class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled
+                    value="{{request.service.title}}">
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled
+                    value={{request.patient.first_name}}>
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled
+                    value={{request.patient.last_name}}>
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled
+                    value={{request.patient.patronymic}}>
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled
+                    value={{request.patient.Passport}}>
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled
+                    value={{request.patient.SNILS}}>
                   </div>
                 </form>
               </div>
             </td>
             <td class="px-4 py-2 ">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(1)">
+              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
+               value="Файлы" onclick="toggleFile({{request.research.id}})">
               <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
-              <div id="fileContainer1" class="hidden fixed z-100 w-3/12">
+              <div id="fileContainer{{request.research.id}}" class="hidden fixed z-100 w-3/12">
                 <!-- А вот тут вместо filContainer1, нужно ставить filContainer(id) контейнера -->
-                <form>
                   <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
+                    {% if request.research %}
+                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.research}}</a>
+                    {% endif %}
                   </div>
-                </form>
               </div>
             </td>
             <td class="px-4 py-2 ">
                 <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(2)">
                 <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
                 <div id="fileContainer2" class="hidden fixed z-100 w-3/12">
-                  <form>
                     <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                      <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                      <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
+                        {% if request.research %}
+                        <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.research}}</a>
+                        {% endif %}
                     </div>
-                  </form>
                 </div>
               </td>
-            <td class="px-4 py-2"> 
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex mx-auto">Отменить</button> 
+              <td class="px-4 py-2">
+              <form action="{% url 'review_analysis' request.id %}" target="_parent">
+                <button
+                    type="submit"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                >
+                  Подробнее
+                </button>
+              </form>
             </td>
           </tr>
-          <tr class="border-2 border-blue-500">
-            <td class="px-4 py-2">
-              <p class="place-content-center flex">
-                2
-              </p>
-            </td>
-            <td class="px-4 py-2">
-              <p class="place-content-center flex">
-                9 Сентября 5:02
-              </p>
-            </td>
-            <td class="px-4 py-2 mx-2">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Данные по заявке" onclick="toggleForm(2)"> 
-              <!-- Если вот в эту строку toggleForm(2), вместо 2, передать id, то код должен прекрасно работать -->
-              <div id="formContainer2" class="hidden fixed z-100 w-full">
-                <form>
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
-                    <textarea class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled>Какое-то очень длинное описание, добавленное для доказательства того, что поле автоматически увеличивает свою высоту</textarea>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled>
-                  </div>
-                </form>
-              </div>
-            </td>
-            <td class="px-4 py-2 ">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(3)">
-              <!-- Если вот в эту строку toggleForm(2), вместо 2, передать id, то код должен прекрасно работать -->
-              <div id="fileContainer3" class="hidden fixed z-100 w-3/12">
-                <form>
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
-                  </div>
-                </form>
-              </div>
-            </td>
-            <td class="px-4 py-2 ">
-                <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(4)">
-                <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
-                <div id="fileContainer4" class="hidden fixed z-100 w-3/12">
-                  <form>
-                    <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                      <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                      <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
-                    </div>
-                  </form>
-                </div>
-              </td>
-            <td class="px-4 py-2"> 
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex mx-auto">Отменить</button> 
-            </td>
-          </tr>
-          <tr class="border-2 border-blue-500">
-            <td class="px-4 py-2">
-              <p class="place-content-center flex">
-                3
-              </p>
-            </td>
-            <td class="px-4 py-2">
-              <p class="place-content-center flex">
-                9 Сентября 5:17
-              </p>
-            </td>
-            <td class="px-4 py-2 mx-2">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Данные по заявке" onclick="toggleForm(3)"> 
-              <!-- Если вот в эту строку toggleForm(3), вместо 3, передать id, то код должен прекрасно работать -->
-              <div id="formContainer3" class="hidden fixed z-100 w-full">
-                <form>
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
-                    <textarea class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled>Какое-то очень длинное описание, добавленное для доказательства того, что поле автоматически увеличивает свою высоту</textarea>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled>
-                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled>
-                  </div>
-                </form>
-              </div>
-            </td>
-            <td class="px-4 py-2 ">
-              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(5)">
-              <!-- Если вот в эту строку toggleForm(3), вместо 3, передать id, то код должен прекрасно работать -->
-              <div id="fileContainer5" class="hidden fixed z-100 w-3/12">
-                <form>
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
-                  </div>
-                </form>
-              </div>
-            </td>
-            <td class="px-4 py-2 ">
-                <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center" value="Файлы" onclick="toggleFile(6)">
-                <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
-                <div id="fileContainer6" class="hidden fixed z-100 w-3/12">
-                  <form>
-                    <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                      <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 1</a>
-                      <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">Файл 2</a>
-                    </div>
-                  </form>
-                </div>
-            </td>
-            <td class="px-4 py-2"> 
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex mx-auto">Отменить</button> 
-            </td>
-          </tr>
+          {% endfor %}
+          {% else %}
+          <h4 class="mt-3 mb-3 mb-3 text-center">
+            Нет завершенных заявок
+        </h4>
+          {% endif %}
         </tbody>
       </table>
       <!-- <div class="w-full overflow-x-auto">

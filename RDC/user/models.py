@@ -25,6 +25,7 @@ class Users(AbstractUser):
     # 0 - обычный пользователь, 1 - доктор
     is_doctor = models.BooleanField(default=0)
 
+
 class Patients(models.Model):
     last_name = models.CharField(max_length=32, blank=True)
     first_name = models.CharField(max_length=32, blank=True)

@@ -32,4 +32,8 @@ def analysis_request(request):
 
 
 def completed_request(request):
-    return render(request, 'doctor_cabinet/completed_request.html')
+    doctor = Doctors.objects.get(user=request.user.id)
+    context={
+        'requests': Requests.objects.filter(doctor=doctor, status__gte = 9)
+    }
+    return render(request, 'doctor_cabinet/completed_request.html', context)
