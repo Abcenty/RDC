@@ -10,3 +10,8 @@ class Doctors(models.Model):
 
     def __str__(self):
         return f'{self.user.last_name} {self.user.first_name} {self.user.patronymic}'
+    
+
+class Report(models.Model):
+    file = models.FileField(upload_to='media/', blank=True)
+    comment = models.TextField()

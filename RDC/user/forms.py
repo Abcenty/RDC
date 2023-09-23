@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, User
 from django import forms
 from .models import Users, Patients
 from treatment.models import Requests, Researches
+from doctor_cabinet.models import Report
 
 
 class PatientChoosingForm(forms.ModelForm):
@@ -137,4 +138,12 @@ class UserResearchAddForm(UserChangeForm):
     class Meta:
         model = Researches
         fields = ('research_file',)
+
+
+class DoctorReportAddForm(UserChangeForm):
+    file = forms.FileField(widget=forms.FileInput, required=False)
+
+    class Meta:
+        model = Report
+        fields = ('file',)
 
