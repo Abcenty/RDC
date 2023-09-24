@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from treatment.models import Requests
-from doctor_cabinet.models import Doctors
+from doctor_cabinet.models import Doctors, Report
+from user.forms import DoctorReportAddForm
 
 # Create your views here.
 
@@ -26,7 +27,8 @@ def doctors_request(request):
 def analysis_request(request):
     doctor = Doctors.objects.get(user=request.user.id)
     context={
-        'requests': Requests.objects.filter(doctor=doctor, status = 8)
+        'requests': Requests.objects.filter(doctor=doctor, status = 8),
+        'form': DoctorReportAddForm()
     }
     return render(request, 'doctor_cabinet/analysis_request.html', context)
 
@@ -34,6 +36,6 @@ def analysis_request(request):
 def completed_request(request):
     doctor = Doctors.objects.get(user=request.user.id)
     context={
-        'requests': Requests.objects.filter(doctor=doctor, status__gte = 9)
+        'requests': Requests.objects.filter(doctor=doctor, status__gte = 9),
     }
     return render(request, 'doctor_cabinet/completed_request.html', context)

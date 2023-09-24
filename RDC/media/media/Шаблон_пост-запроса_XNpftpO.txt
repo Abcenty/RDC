@@ -1,6 +1,0 @@
-{
-    "title":"KAZAKI",
-    "price":13500,
-    "description":"Top sneakers for top players",
-    "category_id":1
-}

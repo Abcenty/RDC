@@ -13,5 +13,8 @@ class Doctors(models.Model):
     
 
 class Report(models.Model):
-    file = models.FileField(upload_to='media/', blank=True)
-    comment = models.TextField()
+    file = models.FileField(upload_to='reports/', blank=True)
+    comment = models.TextField(blank=True)
+
+    def __str__(self):
+        return f'Заключение №{self.id}'

@@ -23,7 +23,7 @@ from treatment.views import service, doctor, payment, whomToServe, uploadedfiles
 from user.views import authorization, registration, activate_account, profile, alert
 from treatment.services import request_add, doctor_add, patient_add, research_add, pay
 from doctor_cabinet.views import doctor_cabinet, doctors_request, analysis_request, completed_request
-from doctor_cabinet.services import request_accept, continue_analysis, complete_analysis, review_analysis
+from doctor_cabinet.services import request_accept, continue_analysis, complete_analysis, review_analysis # report_add
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -50,6 +50,7 @@ urlpatterns = [
     path('continue_analysis/<int:request_id>', continue_analysis, name='continue_analysis'),
     path('complete_analysis/<int:request_id>', complete_analysis, name='complete_analysis'),
     path('review_analysis/<int:request_id>', review_analysis, name='review_analysis'),
+    # path('report_add/', report_add, name='report_add'),
 
     path('doctor_cabinet/', doctor_cabinet, name='doctor_cabinet'),
     path('doctors_request/', doctors_request, name='doctors_request'),

@@ -153,7 +153,8 @@
 {% for request in requests %}               
   <div class="flex flex-col items-center max-w-screen-xl mx-auto pb-32">
     <div class="flex flex-col justify-between w-full">
-      <!--<form action="" class="">-->
+      {% comment %} <form action="{% url 'complete_analysis' request.id %}" method='post' class="">
+        {% csrf_token %} {% endcomment %}
         <div class="flex-col w-9/12 gap-2 flex mx-auto border-2 border-blue-500 p-4 rounded-lg">
             <div class="flex gap-2 place-content-center">
               <div class="w-1/12">
@@ -180,10 +181,32 @@
                 <input type="text" class="border-blue-500 rounded-lg w-4/12 mb-2" placeholder="Отчество (при наличии)" disabled
                 value={{request.patient.patronymic}}>
             </div>
-            <div class="w-full flex place-content-center">
+
+
+            <form class="" method='post' action="{% url 'complete_analysis' request.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div>
+                    {{form.comment}}
+                  </div>
+                  <div>
+                    {{form.file}}
+                  </div>
+                <p>
+                    <input type="submit" value="Отправить"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"/>
+                    </p>
+                </form>
+
+
+            {% comment %} <div class="w-full flex place-content-center">
                 <textarea class="border-blue-500 w-full mb-2 p-2 border rounded-md break-words h-32" placeholder="Введите результат исследования"></textarea>
-            </div>
-            <input type="file" class="flex ml-auto">
+            </div> {% endcomment %}
+            
+            {% comment %} <input type="file" class="flex ml-auto"> {% endcomment %}
+                
+
+
+
             <div class="flex mx-auto gap-4 w-full justify-between mt-2">
                 <input type="button" value="Назад" class="border py-2 px-4 rounded-lg border-blue-500 flex">
                 <div id="myModal" class="modal">
@@ -254,20 +277,23 @@
                       closeModal();
                     }
                   </script>
-                  
-                  <form action="{% url 'complete_analysis' request.id %}" target="_parent">
+                  {% comment %} <p>
+                    <input type="submit" value="Отправить"
+                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"/>
+                    </p> {% endcomment %}
+                  {% comment %} <form action="{% url 'complete_analysis' request.id %}" target="_parent">
                     <button
                         type="submit"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
                     >
                       Отправить
                     </button>
-                  </form> >
+                  </form>  {% endcomment %}
             </div>
         </div>
         {% endfor %}
         {% endif %}
-      <!--</form>-->
+      {% comment %} </form> {% endcomment %}
     </div>
     
 </body>  

@@ -9,7 +9,7 @@ from doctor_cabinet.models import Doctors, Report
 
 # СМЕНИ FOREIGN KEY НА ONE TO MANY ЧТОБЫ РЕАЛИЗОВАТЬ ДОБАВЛЕНИЕ НЕСКОЛЬКИХ ФАЙЛОВ НА ОДИН ЗАПРОС
 class Researches(models.Model):
-    research_file = models.FileField(upload_to='media/')
+    research_file = models.FileField(upload_to='researches/')
     
 
     def __str__(self):
