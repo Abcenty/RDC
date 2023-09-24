@@ -72,4 +72,14 @@ def research_add(request):
 
 def pay(request):
     Requests.objects.filter(user=request.user, status=5).update(status=6, payment_data=date.today())
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(reverse('services'))
+
+
+def protocol_viewing(request, request_id):
+    Requests.objects.filter(id=request_id, user=request.user, status = 9).update(status=11)
+    return HttpResponseRedirect(reverse('detailed_view'))
+
+
+def complete_viewing(request, request_id):
+    Requests.objects.filter(id=request_id, user=request.user, status = 11).update(status=9)
+    return HttpResponseRedirect(reverse('protocols'))

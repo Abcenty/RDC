@@ -82,4 +82,18 @@ def uploadedfiles(request):
     return render(request, 'treatment/UploadedFiles/uploadedfiles.html', context)
 
 
+def protocols(request):
+    context={
+        'requests': Requests.objects.filter(user=request.user, status__gte = 9),
+    }
+    return render(request, 'treatment/Protocols/protocols.html', context)
+
+
+def detailed_view(request):
+    context={
+        'requests': Requests.objects.filter(user=request.user, status = 11),
+    }
+    return render(request, 'treatment/Protocols/detailed_view.html', context)
+
+
 
