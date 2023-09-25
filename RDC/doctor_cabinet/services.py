@@ -2,7 +2,7 @@ from django.shortcuts import HttpResponseRedirect
 from doctor_cabinet.models import Doctors, Report
 from treatment.models import Requests
 from django.urls import reverse
-from user.forms import DoctorReportAddForm
+from doctor_cabinet.forms import DoctorReportAddForm
 
 
 def request_accept(request, request_id):

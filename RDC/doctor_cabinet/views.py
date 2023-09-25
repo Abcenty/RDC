@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from treatment.models import Requests
 from doctor_cabinet.models import Doctors, Report
-from user.forms import DoctorReportAddForm
+from doctor_cabinet.forms import DoctorReportAddForm
 
 # Create your views here.
 

@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from user.models import Services, Patients
 from treatment.models import Requests, Researches
 from django.urls import reverse
-from user.forms import UserConfirmationForm, PatientChoosingForm, UserResearchAddForm
+from treatment.forms import PatientChoosingForm, UserResearchAddForm, UserConfirmationForm
 from doctor_cabinet.models import Doctors
 
 
