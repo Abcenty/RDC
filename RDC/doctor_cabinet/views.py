@@ -26,9 +26,12 @@ def doctors_request(request):
 
 def analysis_request(request):
     doctor = Doctors.objects.get(user=request.user.id)
+    # !!!  ИСПРАВЬ ФИЛЬТРАЦИИ, ОНО МОЖЕТ ВЗЯТЬ ПОСЛЕДНИЙ ЗАГРУЖЕННЫЙ, НО НЕ ОБЯЗАТЕЛЬНО ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ !!!
+    # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
+    comment = Report.objects.latest('id').comment
     context={
         'requests': Requests.objects.filter(doctor=doctor, status = 8),
-        'form': DoctorReportAddForm()
+        'form': DoctorReportAddForm(initial={'comment': comment}),
     }
     return render(request, 'doctor_cabinet/analysis_request.html', context)
 
