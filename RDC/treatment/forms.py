@@ -1,6 +1,6 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserChangeForm
 from django import forms
-from .models import Users, Patients
+from .models import Patients
 from treatment.models import Requests, Researches
 from doctor_cabinet.models import Report
 
@@ -53,3 +53,16 @@ class UserConfirmationForm(forms.ModelForm):
     class Meta:
         model = Requests
         fields = ('service', 'patient', 'doctor', 'research') # 'files'
+
+
+class UserReportViewForm(UserChangeForm):
+    file = forms.FileField(widget=forms.FileInput(attrs={'readonly': True}), required=False)
+    comment = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Введите результат исследования',
+        'class': 'border-blue-500 w-full mb-2 p-2 border rounded-md break-words h-32',
+        'readonly': True
+        }))
+
+    class Meta:
+        model = Report
+        fields = ('file', 'comment',)

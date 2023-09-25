@@ -184,7 +184,8 @@
                 value={{request.patient.patronymic}}>
             </div>
              <div class="w-full flex place-content-center">
-                <textarea class="border-blue-500 w-full mb-2 p-2 border rounded-md break-words h-32" placeholder="Введите результат исследования"></textarea>
+                {% comment %} <textarea class="border-blue-500 w-full mb-2 p-2 border rounded-md break-words h-32" placeholder="Введите результат исследования"></textarea> {% endcomment %}
+                {{form.comment}}
             </div> 
             
             <input type="file" class="flex ml-auto"> 

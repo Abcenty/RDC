@@ -1,9 +1,9 @@
-from django.shortcuts import render, HttpResponseRedirect
-from user.models import Services, Patients
+from django.shortcuts import render
+from user.models import Services
 from treatment.models import Requests, Researches
-from django.urls import reverse
-from treatment.forms import PatientChoosingForm, UserResearchAddForm, UserConfirmationForm
-from doctor_cabinet.models import Doctors
+from treatment.forms import PatientChoosingForm, UserResearchAddForm, UserConfirmationForm, UserReportViewForm
+from doctor_cabinet.models import Doctors, Report
+from doctor_cabinet.forms import DoctorReportAddForm
 
 
 # Create your views here.
@@ -90,8 +90,10 @@ def protocols(request):
 
 
 def detailed_view(request):
+    comment = Report.objects.latest('id').comment
     context={
         'requests': Requests.objects.filter(user=request.user, status = 11),
+        'form': UserReportViewForm(initial={'comment': comment}),
     }
     return render(request, 'treatment/Protocols/detailed_view.html', context)
 
