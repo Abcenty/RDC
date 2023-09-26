@@ -33,7 +33,7 @@ def analysis_request(request):
     comment = Report.objects.latest('id').comment
     context={
         'requests': Requests.objects.filter(doctor=doctor, status = 8),
-        'form': DoctorReportAddForm(initial={'comment': comment}),
+        'form': DoctorReportAddForm(initial={'comment': comment, 'file': file}),
     }
     return render(request, 'doctor_cabinet/analysis_request.html', context)
 
