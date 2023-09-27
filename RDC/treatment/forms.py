@@ -44,10 +44,10 @@ class UserResearchAddForm(UserChangeForm):
 
 
 class UserConfirmationForm(forms.ModelForm):
-    service = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
-    patient = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
-    doctor = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
-    research = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+    service = forms.CharField(widget=forms.TextInput(attrs={'readonly': True , "class": "px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-5/12 bg-white" }))
+    patient = forms.CharField(widget=forms.TextInput(attrs={'readonly': True, "class": "px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-5/12 bg-white" }))
+    doctor = forms.CharField(widget=forms.TextInput(attrs={'readonly': True, "class": "px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-5/12 bg-white" }))
+    research = forms.CharField(widget=forms.TextInput(attrs={'readonly': True, "class": "px-3 py-1 border border-blue-300 rounded-lg focus:outline-blue-200 w-5/12 bg-white" }))
 
 
     class Meta:

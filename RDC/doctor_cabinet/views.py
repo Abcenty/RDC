@@ -26,9 +26,13 @@ def doctors_request(request):
 
 def analysis_request(request):
     doctor = Doctors.objects.get(user=request.user.id)
+    file = Report.objects.latest('id').file
+    comment = Report.objects.latest('id').comment
     context={
         'requests': Requests.objects.filter(doctor=doctor, status = 8),
-        'form': DoctorReportAddForm()
+        'form': DoctorReportAddForm(
+            initial={'comment': comment, 'file': file}
+        )
     }
     return render(request, 'doctor_cabinet/analysis_request.html', context)
 
