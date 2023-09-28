@@ -367,6 +367,14 @@
             </div>
     </div>
     <div class="items-center w-full mx-auto flex flex-row justify-between pt-8">
+        <form action="{% url 'to_doctors' %}" target="_parent">
+          <button
+              type="submit"
+              class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+          >
+              Назад
+          </button>
+        </form>
         {% comment %} <form action="{% url 'patient_add' %}" target="_parent" method="post">
            
         </form> {% endcomment %}

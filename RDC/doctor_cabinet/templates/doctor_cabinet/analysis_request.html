@@ -215,7 +215,27 @@
             
             {% comment %} <input type="file" class="flex ml-auto"> {% endcomment %}
                 
-                
+
+
+
+            <div class="flex mx-auto gap-4 w-full justify-between mt-2">
+                {% comment %} <input type="button" value="Назад" class="border py-2 px-4 rounded-lg border-blue-500 flex"> {% endcomment %}
+                <form action="{% url 'to_doctors_requests' %}" target="_parent">
+                    <button
+                        type="submit"
+                        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                    >
+                        Назад
+                    </button>
+                  </form>
+                <div id="myModal" class="modal">
+                    <div class="modal-content">
+                      <span class="close" onclick="closeModal()">&times;</span>
+                      <p class="text-center text-gray-700 text-lg mb-4">Вы уверены, что хотите отменить заявку?</p>
+                      <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="cancelRequest()">Да, отменить</button>
+                    </div>
+                  </div>
+                  <button class="border py-2 px-4 rounded-lg border-blue-500" type="button" onclick="openModal()">Отменить заявку</button>
                   
                   <style>
                     /* Стили для модального окна */
