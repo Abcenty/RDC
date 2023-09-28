@@ -36,12 +36,12 @@ class Requests(models.Model):
     # 7 - в работе, 8 - в процессе анализа, 9 - выполнена, 10 - отклонена, 11 - просматривается пользователем
 
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ДОКТОРА ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
-    doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE, default=2)
+    doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE, default=6)
     request_data = models.DateField(auto_now_add=True)
     request_time = models.TimeField(auto_now_add=True)
     payment_data = models.DateField(default='2000-01-01')
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ИССЛЕДОВАНИЕ ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
-    research = models.ForeignKey(Researches, on_delete=models.CASCADE, default = 1)
+    research = models.ForeignKey(Researches, on_delete=models.CASCADE, default = 12)
     report = models.ForeignKey(Report, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
