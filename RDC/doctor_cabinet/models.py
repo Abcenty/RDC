@@ -9,7 +9,7 @@ class Doctors(models.Model):
     services = models.ManyToManyField(Services)
 
     def __str__(self):
-        return f'{self.user.last_name} {self.user.first_name} {self.user.patronymic}'
+        return f'{self.user.last_name} {self.user.first_name} {self.user.patronymic} {self.id}'
     
 
 class Report(models.Model):

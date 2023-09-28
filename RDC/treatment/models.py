@@ -18,8 +18,10 @@ class Researches(models.Model):
 
 
 class Requests(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    service = models.ForeignKey(Services, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, default=1)
+
+    # ОБЯЗАТЕЛЬНО СОЗДАВАЙ УСЛУГУ ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
+    service = models.ForeignKey(Services, on_delete=models.CASCADE, default = 1)
 
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ПАЦИЕНТА ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE, default=1)
@@ -36,12 +38,12 @@ class Requests(models.Model):
     # 7 - в работе, 8 - в процессе анализа, 9 - выполнена, 10 - отклонена, 11 - просматривается пользователем
 
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ДОКТОРА ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
-    doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE, default=6)
+    doctor = models.ForeignKey(Doctors, on_delete=models.CASCADE, default=2)
     request_data = models.DateField(auto_now_add=True)
     request_time = models.TimeField(auto_now_add=True)
     payment_data = models.DateField(default='2000-01-01')
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ИССЛЕДОВАНИЕ ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
-    research = models.ForeignKey(Researches, on_delete=models.CASCADE, default = 12)
+    research = models.ForeignKey(Researches, on_delete=models.CASCADE, default = 1)
     report = models.ForeignKey(Report, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
