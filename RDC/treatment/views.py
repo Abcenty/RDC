@@ -3,11 +3,7 @@ from user.models import Services
 from treatment.models import Requests, Researches
 from treatment.forms import PatientChoosingForm, UserResearchAddForm, UserConfirmationForm, UserReportViewForm
 from doctor_cabinet.models import Doctors, Report
-from doctor_cabinet.forms import DoctorReportAddForm
 
-
-# Create your views here.
-# MyModel.objects.exclude(category= u'mycategory')
 
 def service(request):
     context = {
