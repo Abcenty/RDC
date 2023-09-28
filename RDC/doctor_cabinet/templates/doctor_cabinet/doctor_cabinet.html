@@ -104,7 +104,14 @@
           <a href={% url 'doctor_cabinet' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Новые заявки</a>
         </li>
         <li>
-          <a href={% url 'doctors_request' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Принятые заявки</a>
+          <div class="relative">
+            <a href={% url 'doctors_request' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Принятые заявки</a>
+            <div class="h-4 w-4 bg-red-500 rounded-full absolute right-0 top-0 hidden" id="point">
+              <!-- <div class="h-3 w-3 bg-white rounded-full absolute right-0 top-0" style="margin-top: 2px; margin-right: 2px;"> -->
+                <p id="added_request_counter" class="absolute right-0 top-0 text-xs flex text-white"></p>
+              <!-- </div> -->
+            </div>
+          </div>
         </li>
         <li>
           <a href={% url 'completed_request' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Завершенные заявки</a>
@@ -120,7 +127,7 @@
     <div class="flex flex-col items-center max-w-screen-xl mr-auto">
       <h1 class="mb-4 text-2xl font-medium mr-auto">Выберите заявку</h1>
     </div>
-    <div class="w-full overflow-x-auto rounded-md">
+    <div class="w-full rounded-md">
       <table class="w-full border-collapse">
         <thead>
           <tr class="border-2 border-blue-500">
@@ -148,8 +155,9 @@
               <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
                value="Данные по заявке" onclick="toggleForm({{request.id}})">
               <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
-              <div id="formContainer{{request.id}}" class="hidden fixed z-100 w-full">
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
+              <div class="relative">
+                <div id="formContainer{{request.id}}" class="hidden absolute w-full">
+                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-full">
                     <input class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled
                     value="{{request.service.title}}">
                     <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled
@@ -163,25 +171,31 @@
                     <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled
                     value={{request.patient.SNILS}}>
                   </div>
+                </div>
               </div>
             </td>
             <td class="px-4 py-2 ">
               <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
                value="Файлы" onclick="toggleFile({{request.research.id}})">
               <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
-              <div id="fileContainer{{request.research.id}}" class="hidden fixed z-100 w-3/12">
-                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
-                    {% if request.research %}
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.research}}</a>
-                    {% endif %}
-                  </div>
+              <div class="relative">
+                <div id="fileContainer{{request.research.id}}" class="hidden absolute w-full">
+                    <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
+                      {% if request.research %}
+                      <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.research}}</a>
+                      {% endif %}
+                    </div>
+                </div> 
               </div>
+              
             </td>
             <td class="px-4 py-2">
                 <form action="{% url 'request_accept' request.id %}" target="_parent">
                     <button
+                        onclick="showPoint({{request.id}})"
+                        id="accept_button{{request.id}}"
                         type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2"
                     >
                       Добавить
                     </button>
@@ -208,10 +222,11 @@
           </thead>
           <tbody>
             <!-- Здесь будет генерироваться множество строк с помощью JavaScript -->
-          </tbody>
-        </table>
+          <!-- </tbody>
+        </table> -->
       </div>
     </div>
+    <input type="number" value="0" id="counter" hidden>
   </div>
 </body>  
   <script>
@@ -236,6 +251,35 @@
       // Ваш код для отмены заявки
       alert('Заявка успешно добавлена.');
       closeModal();
+    }
+
+    function showPoint(rowId) {
+      const point = document.getElementById("point");
+      const accept_button = document.getElementById(`accept_button${rowId}`);
+      const counter = document.getElementById("counter");
+      const added_request_counter = document.getElementById("added_request_counter");
+
+      if (accept_button.value == "Принять") {
+        counter.value++;
+        if (counter.value != 0) {
+          point.style.display = "block";
+          accept_button.value = "Удалить";
+        }
+      }
+      else {
+        accept_button.value = "Принять";
+        counter.value--;
+      }
+      if (counter.value == 0) {
+          point.style.display = "none";
+      }
+      added_request_counter.innerText = `${counter.value}`;
+      // if (added_request_counter.value != 0) {
+      //   added_request_counter.style.display = "block";
+      // }
+      // else {
+      //   added_request_counter.style.display = "none";
+      // }
     }
   </script>
   <!-- <script>

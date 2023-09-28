@@ -309,8 +309,8 @@
 
 
 
-        <form class="flex flex-col items-center max-w-screen-xl mx-auto"
-        method='post' action="{% url 'research_add' %}" enctype="multipart/form-data">
+            <form class="flex flex-col items-center max-w-screen-xl mx-auto"
+             method='post' action="{% url 'research_add' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <h1 class="mb-4 text-2xl font-medium mr-auto">Выберите врача</h1>
             <div class="flex flex-row w-full">
@@ -320,8 +320,8 @@
                 {{form.research_file}}
               </div>
             </div>
-            <p>
-                <input type="submit" value="Подтвердить загрузку" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"/>
+            <p class="flex w-full">
+                <input id="uploadConfirmation" type="submit" value="Подтвердить загрузку" onclick="uploadConfirmation()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2 mr-auto mt-4"/>
                 </p>
             </form>
 
@@ -339,6 +339,7 @@
             </form>
             <form action="{% url 'confirmation' %}" target="_parent">
               <button
+                  onclick="examination()"
                   type="submit"
                   class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
               >
@@ -347,4 +348,3 @@
             </form>
           </div>
           {% endblock %}
-       
