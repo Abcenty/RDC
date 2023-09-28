@@ -32,6 +32,7 @@ def complete_analysis(request, request_id):
 
 
 # только для завершенных запросов (отмененные нельзя пересмотреть)
+# ДОКТОР И ПОЛЬЗОВАТЕЛЬ НЕ МОГУТ ПРОСМОТРЕТЬ ЗАЯВКУ ОДНОВРЕМЕННО
 def review_analysis(request, request_id):
     doctor = Doctors.objects.get(user=request.user.id)
     Requests.objects.filter(id=request_id, doctor=doctor, status = 9).update(status=8)

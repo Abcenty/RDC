@@ -24,6 +24,8 @@ from user.views import authorization, registration, activate_account, profile, a
 from treatment.services import request_add, doctor_add, patient_add, research_add, pay, protocol_viewing, complete_viewing
 from doctor_cabinet.views import doctor_cabinet, doctors_request, analysis_request, completed_request
 from doctor_cabinet.services import request_accept, continue_analysis, complete_analysis, review_analysis # report_add
+from treatment.reverse_addressing import to_services, to_researches, to_confirming, to_doctors, to_patients
+from doctor_cabinet.reverse_addressing import to_doctors_requests
 
 urlpatterns = [
     # users interface pages
@@ -65,6 +67,16 @@ urlpatterns = [
     path('doctors_request/', doctors_request, name='doctors_request'),
     path('analysis_request/', analysis_request, name='analysis_request'),
     path('completed_request/', completed_request, name='completed_request'),
+
+    # reverse addressing of users interface
+    path('to_services/', to_services, name='to_services'),
+    path('to_researches/', to_researches, name='to_researches'),
+    path('to_confirming/', to_confirming, name='to_confirming'),
+    path('to_doctors/', to_doctors, name='to_doctors'),
+    path('to_patients/', to_patients, name='to_patients'),
+
+    # reverse addressing of doctors interface
+    path('to_doctors_requests/', to_doctors_requests, name='to_doctors_requests'),
 
     # email confirming
     path('activate/<str:uidb64>/<str:token>/', activate_account, name='activate'),

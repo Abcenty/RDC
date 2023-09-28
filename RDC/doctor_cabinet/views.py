@@ -24,15 +24,16 @@ def doctors_request(request):
     return render(request, 'doctor_cabinet/doctors_request.html', context)
 
 
+# ЗАГРУЖЕННЫЙ ФАЙЛ ОБНОВЛЯЕТСЯ ПРИ ПРОСМОТРЕ, НУЖНО ЧТОБЫ ОСТАВАЛСЯ ПРЕЖНИЙ
 def analysis_request(request):
     doctor = Doctors.objects.get(user=request.user.id)
+    # !!!  ИСПРАВЬ ФИЛЬТРАЦИИ, ОНО МОЖЕТ ВЗЯТЬ ПОСЛЕДНИЙ ЗАГРУЖЕННЫЙ, НО НЕ ОБЯЗАТЕЛЬНО ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ !!!
+    # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
     file = Report.objects.latest('id').file
     comment = Report.objects.latest('id').comment
     context={
         'requests': Requests.objects.filter(doctor=doctor, status = 8),
-        'form': DoctorReportAddForm(
-            initial={'comment': comment, 'file': file}
-        )
+        'form': DoctorReportAddForm()
     }
     return render(request, 'doctor_cabinet/analysis_request.html', context)
 
