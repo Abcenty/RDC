@@ -5,6 +5,7 @@ from treatment.forms import PatientChoosingForm, UserResearchAddForm, UserConfir
 from doctor_cabinet.models import Doctors, Report
 
 
+# Корректно
 def service(request):
     context = {
         'services': Services.objects.exclude(title='Default'),
@@ -12,6 +13,7 @@ def service(request):
     return render(request, 'treatment/Applications/Service.html', context)
 
 
+# Корректно
 def doctor(request):
     # current_request = Requests.objects.get(user=request.user, status=1)
     # МОГУТ ВОЗНИКНУТЬ ПРОБЛЕМЫ ИЗ-ЗА ЛОГИКИ ФИЛЬТРАЦИИ. ПРОВЕРЬ ЕЕ В СЛУЧАЕ ОШИБОК С ДОБАВЛЕНИЕМ ДОКТОРА В БД
