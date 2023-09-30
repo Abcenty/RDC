@@ -58,6 +58,18 @@ def patient_add(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+# def research_add(request):
+#     if request.method == "POST":
+#         form = UserResearchAddForm(data=request.POST, files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             # !!!  ИСПРАВЬ ФИЛЬТРАЦИИ, ОНО МОЖЕТ ВЗЯТЬ ПОСЛЕДНИЙ ЗАГРУЖЕННЫЙ, НО НЕ ОБЯЗАТЕЛЬНО ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ !!!
+#             # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
+#             research_file = Researches.objects.latest('id')
+#             Requests.objects.filter(user=request.user, status=3).update(research=research_file)
+#     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 def research_add(request):
     if request.method == "POST":
         form = UserResearchAddForm(data=request.POST, files=request.FILES)
@@ -66,8 +78,12 @@ def research_add(request):
             # !!!  ИСПРАВЬ ФИЛЬТРАЦИИ, ОНО МОЖЕТ ВЗЯТЬ ПОСЛЕДНИЙ ЗАГРУЖЕННЫЙ, НО НЕ ОБЯЗАТЕЛЬНО ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ !!!
             # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
             research_file = Researches.objects.latest('id')
-            Requests.objects.filter(user=request.user, status=3).update(research=research_file)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            if request.FILES:
+                Requests.objects.filter(user=request.user, status=3).update(research=research_file, status=4)
+            else:
+                Requests.objects.filter(user=request.user, status=3).update(status=4)
+                Researches.objects.latest('id').delete()
+    return HttpResponseRedirect(reverse('confirmation'))
 
 
 def pay(request):
