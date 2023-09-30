@@ -26,6 +26,7 @@ def doctor_add(request):
        return HttpResponseRedirect(reverse('whomToServe'))
         
 
+# Корректно (фильтрация по текущему пользователю, надо добавить initial при выборе "me")
 def patient_add(request):
     user = request.user
     user_choice = request.POST.get('service_choice')
@@ -72,6 +73,7 @@ def patient_add(request):
 #     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+# Некорректно
 def research_add(request):
     if request.method == "POST":
         form = UserResearchAddForm(data=request.POST, files=request.FILES)
@@ -88,16 +90,19 @@ def research_add(request):
     return HttpResponseRedirect(reverse('confirmation'))
 
 
+# Корректно, фильтрация по текущему пользователю
 def pay(request):
     Requests.objects.filter(user=request.user, status=5).update(status=6, payment_data=date.today())
     return HttpResponseRedirect(reverse('services'))
 
 
+# Корректно, фильтрация по текущему пользователю
 def protocol_viewing(request, request_id):
     Requests.objects.filter(id=request_id, user=request.user, status = 9).update(status=11)
     return HttpResponseRedirect(reverse('detailed_view'))
 
 
+# Корректно, фильтрация по текущему пользователю
 def complete_viewing(request, request_id):
     Requests.objects.filter(id=request_id, user=request.user, status = 11).update(status=9)
     return HttpResponseRedirect(reverse('protocols'))

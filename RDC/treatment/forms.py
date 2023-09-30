@@ -1,4 +1,6 @@
 from django.contrib.auth.forms import UserChangeForm
+    
+
 from django import forms
 from .models import Patients
 from treatment.models import Requests, Researches
@@ -35,12 +37,16 @@ class PatientChoosingForm(forms.ModelForm):
         fields = ('last_name', 'first_name', 'patronymic', 'birth_date', 'SNILS', 'Passport') # , 'birth_date', 'SNILS', 'Passport'
 
 
-class UserResearchAddForm(UserChangeForm):
-    research_file = forms.FileField(widget=forms.FileInput, required=False)
+# class UserResearchAddForm(UserChangeForm):
+#     research_file = forms.FileField(widget=forms.FileInput, required=False)
 
-    class Meta:
-        model = Researches
-        fields = ('research_file',)
+#     class Meta:
+#         model = Researches
+#         fields = ('research_file',)
+
+
+class UserResearchAddForm(forms.Form):
+    research_file = forms.FileField(widget=forms.FileInput, required=False)
 
 
 class UserConfirmationForm(forms.ModelForm):
