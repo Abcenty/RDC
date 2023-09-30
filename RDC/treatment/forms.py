@@ -37,16 +37,12 @@ class PatientChoosingForm(forms.ModelForm):
         fields = ('last_name', 'first_name', 'patronymic', 'birth_date', 'SNILS', 'Passport') # , 'birth_date', 'SNILS', 'Passport'
 
 
-# class UserResearchAddForm(UserChangeForm):
-#     research_file = forms.FileField(widget=forms.FileInput, required=False)
-
-#     class Meta:
-#         model = Researches
-#         fields = ('research_file',)
-
-
-class UserResearchAddForm(forms.Form):
+class UserResearchAddForm(UserChangeForm):
     research_file = forms.FileField(widget=forms.FileInput, required=False)
+
+    class Meta:
+        model = Researches
+        fields = ('research_file',)
 
 
 class UserConfirmationForm(forms.ModelForm):

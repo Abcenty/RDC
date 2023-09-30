@@ -69,21 +69,27 @@ def patient_add(request):
 #             # !!!  ИСПРАВЬ ФИЛЬТРАЦИИ, ОНО МОЖЕТ ВЗЯТЬ ПОСЛЕДНИЙ ЗАГРУЖЕННЫЙ, НО НЕ ОБЯЗАТЕЛЬНО ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ !!!
 #             # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
 #             research_file = Researches.objects.latest('id')
-#             Requests.objects.filter(user=request.user, status=3).update(research=research_file)
+#             if request.FILES:
+            #     Requests.objects.filter(user=request.user, status=3).update(research=research_file, status=4)
+            # else:
+            #     Requests.objects.filter(user=request.user, status=3).update(status=4)
+            #     Researches.objects.latest('id').delete()
 #     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-# Некорректно
+# Корректно, фильтрация по текущему пользователю
 def research_add(request):
     if request.method == "POST":
         form = UserResearchAddForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            form.save()
+            research_file = request.FILES.get('research_file', None)
+            Researches.objects.create(research_file=research_file, user=request.user)
+            pass
+            research_file_id = Researches.objects.filter(user=request.user).latest('id').id
             # !!!  ИСПРАВЬ ФИЛЬТРАЦИИ, ОНО МОЖЕТ ВЗЯТЬ ПОСЛЕДНИЙ ЗАГРУЖЕННЫЙ, НО НЕ ОБЯЗАТЕЛЬНО ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ !!!
-            # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ
-            research_file = Researches.objects.latest('id')
+            # ИЛИ ВЗЯТЬ НЕСКОЛЬКО ЗАПРОСОВ   
             if request.FILES:
-                Requests.objects.filter(user=request.user, status=3).update(research=research_file, status=4)
+                Requests.objects.filter(user=request.user, status=3).update(research=research_file_id, status=4) 
             else:
                 Requests.objects.filter(user=request.user, status=3).update(status=4)
                 Researches.objects.latest('id').delete()
