@@ -32,7 +32,7 @@ class PatientChoosingForm(forms.ModelForm):
 
     class Meta:
         model = Patients
-        fields = ('last_name', 'first_name', 'patronymic') # , 'birth_date', 'SNILS', 'Passport'
+        fields = ('last_name', 'first_name', 'patronymic', 'birth_date', 'SNILS', 'Passport') # , 'birth_date', 'SNILS', 'Passport'
 
 
 class UserResearchAddForm(UserChangeForm):

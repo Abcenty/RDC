@@ -6,6 +6,7 @@ from treatment.forms import PatientChoosingForm, UserResearchAddForm
 from datetime import date
 
 
+# Корректно (если csrf token идентифицирует запрос конкретного пользователя)
 def request_add(request):
     if request.method == "POST":
        service_pk = request.POST.get('service', None)
@@ -15,6 +16,7 @@ def request_add(request):
     return HttpResponseRedirect(reverse('doctor'))
 
 
+# Корректно (если csrf token идентифицирует запрос конкретного пользователя)
 def doctor_add(request):
     if request.method == "POST":
        doctor_pk = request.POST.get('doctor', None)
