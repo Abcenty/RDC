@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/x-icon" href="/static/assets/favicon-32x32.png">
+  <title>RdC</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script>
+    document.addEventListener('click', event => {
+        const dropdownButton = event.target.closest("[navbar-dropdown-button]");
+        const dropdown = dropdownButton ? dropdownButton.nextElementSibling : null;
+
+        // Close other open dropdowns
+        const openDropdowns = document.querySelectorAll("[navbar-dropdown].open");
+        openDropdowns.forEach(openDropdown => {
+            if (openDropdown !== dropdown) {
+                openDropdown.classList.add("hidden");
+                openDropdown.classList.remove("open");
+            }
+        });
+
+        if (dropdownButton && dropdown) {
+            dropdown.classList.toggle("hidden");
+            dropdown.classList.toggle("open");
+        } else {
+            openDropdowns.forEach(openDropdown => {
+                openDropdown.classList.add("hidden");
+                openDropdown.classList.remove("open");
+            });
+        }
+    });
+</script>
+</head>
+<nav class="bg-white border-gray-200" >
+  <div class="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
+    <a href="/" class="flex items-center" active-class="">
+      <img src="/static/assets/logo.png" class="h-12 mr-3" alt="RdC">
+      <span class="self-center mr-8 text-2xl font-semibold whitespace-nowrap">RdC</span>
+    </a>
+    <div class="flex ml-auto md:order-2">
+      <div class="relative" x-data="{ open: false }" navbar-dropdown>
+        <button
+          type="button"
+          class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300"
+          @click="open = !open"
+          navbar-dropdown-button
+        >
+          <img class="w-10 h-10 rounded-full pointer-events-none" src="/static/assets/logo.png" alt="user photo">
+        </button>
+        <div
+          class="hidden dropdown absolute right-0 z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+        >
+          <button>
+            <a class="p-2">{{user.username}}</a>
+            <span class="caret"></span>
+          </button>
+          <ul class="menu py-2">
+              <li>
+                <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
+              </li>
+              <li>
+                  <a href={% url 'profile' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профиль</a>
+              </li>
+              <li>
+                <a href={% url 'authorization' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
+              </li>
+              <!--Раскомментить, если пользователь - врач-->
+              <!--<li>
+                <a href="/doctor" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Кабинет врача</a>
+              </li>-->
+            </ul>
+        </div>
+      </div>
+    <button
+      type="button"
+      class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+      @click="mobileMenu = !mobileMenu"
+    >
+      <svg
+        class="w-5 h-5"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 17 14"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M1 1h15M1 7h15M1 13h15"
+        />
+      </svg>
+    </button>
+  </div>
+  <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" :class="mobileMenu ? 'block' : 'hidden'">
+    <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
+      <li>
+        <a href={% url 'service' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Заявки</a>
+      </li>
+      <li>
+        <a href={% url 'services' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Услуги</a>
+      </li>
+      <li>
+        <a href={% url 'uploadedfiles' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Загруженные файлы</a>
+      </li>
+      <li>
+        <a href={% url 'protocols' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Заключения врачей</a>
+      </li>
+      <li>
+        <a href={% url 'payment' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Оплата</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</nav>
+    {% if requests %}                
+  <div class="flex flex-col items-center max-w-screen-xl mx-auto">
+    <div class="flex flex-col items-center max-w-screen-xl mr-auto">
+      <h1 class="mb-4 text-2xl font-medium mr-auto">Выберите заявку</h1>
+    </div>
+    <div class="w-full overflow-x-auto rounded-md">
+      <table class="w-full border-collapse">
+        <thead>
+            
+          <tr class="border-2 border-blue-500">
+            <th class="px-4 py-2 w-1/12">ID</th>
+            <th class="px-4 py-2 w-2/12">Дата</th>
+            <th class="px-4 py-2 w-3/12">Описание заявки</th>
+            <th class="px-4 py-2 w-2/12">Файлы клиента</th>
+            <th class="px-4 py-2 w-2/12">Файлы врача</th>
+            <th class="px-4 py-2 w-2/12"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+          <tr class="border-2 border-blue-500">
+            <td class="px-4 py-2">
+              <p class="place-content-center flex">
+                {{request.id}}
+              </p>
+            </td>
+            <td class="px-4 py-2">
+              <p class="place-content-center flex">
+                {{request.request_data}}
+              </p>
+            </td>
+            <td class="px-4 py-2 mx-2">
+              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
+               value="Данные по заявке" onclick="toggleForm({{request.id}})">
+              <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
+              <div id="formContainer{{request.id}}" class="hidden fixed z-100 w-full">
+                <form>
+                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg w-4/12">
+                    <input class="w-full mb-2 p-2 border border-gray-300 rounded-md break-words max-h-fit" placeholder="Описание" disabled
+                    value="{{request.service.title}}">
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Имя" disabled
+                    value={{request.patient.first_name}}>
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Фамилия" disabled
+                    value={{request.patient.last_name}}>
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Отчество" disabled
+                    value={{request.patient.patronymic}}>
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="Номер паспорта" disabled
+                    value={{request.patient.Passport}}>
+                    <input type="text" class="w-full mb-2 p-2 border border-gray-300 rounded-md" placeholder="СНИЛС" disabled
+                    value={{request.patient.SNILS}}>
+                  </div>
+                </form>
+              </div>
+            </td>
+            <td class="px-4 py-2 ">
+              <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
+               value="Файлы" onclick="toggleFile({{request.research.id}})">
+              <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
+              <div id="fileContainer{{request.research.id}}" class="hidden fixed z-100 w-3/12">
+                <!-- А вот тут вместо filContainer1, нужно ставить filContainer(id) контейнера -->
+                  <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
+                    {% if request.research %}
+                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.research}}</a>
+                    {% endif %}
+                  </div>
+              </div>
+            </td>
+            <td class="px-4 py-2 ">
+                <input type="button" class="cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center"
+                 value="Файлы" onclick="toggleFile({{request.report.id}})">
+                <!-- Если вот в эту строку toggleForm(1), вместо 1, передать id, то код должен прекрасно работать -->
+                <div id="fileContainer{{request.report.id}}" class="hidden fixed z-100 w-3/12">
+                    <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
+                        {% if request.research %}
+                        <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.report}}</a>
+                        {% endif %}
+                    </div>
+                </div>
+              </td>
+              <td class="px-4 py-2">
+              <form action="{% url 'protocol_viewing' request.id %}" target="_parent">
+                <button
+                    type="submit"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                >
+                  Подробнее
+                </button>
+              </form>
+            </td>   
+          </tr>
+          {% endfor %}
+          {% else %}
+          <h4 class="mt-3 mb-3 mb-3 text-center">
+            Нет завершенных заявок
+        </h4>
+          {% endif %}
+        </tbody>
+      </table>
+      <!-- <div class="w-full overflow-x-auto">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="border-2 border-blue-500">
+              <th class="px-4 py-2 w-1/12">ID</th>
+              <th class="px-4 py-2 w-4/12">Описание заявки</th>
+              <th class="px-4 py-2 w-2/12">Просмотреть файлы</th>
+              <th class="px-4 py-2 w-2/12">Принять</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Здесь будет генерироваться множество строк с помощью JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleForm(rowId) {
+      const formContainer = document.getElementById(`formContainer${rowId}`);
+      if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+        formContainer.style.display = 'block';
+      } else {
+        formContainer.style.display = 'none';
+      }
+    }
+
+    function toggleFile(rowId) {
+      const fileContainer = document.getElementById(`fileContainer${rowId}`);
+      if (fileContainer.style.display === 'none' || fileContainer.style.display === '') {
+        fileContainer.style.display = 'block';
+      } else {
+        fileContainer.style.display = 'none';
+      }
+    }
+  </script>
+  <!-- <script>
+    // Ваш массив данных, содержащий информацию о каждой строке
+    const data = [
+      { id: 1, description: "Описание снимка МРТ" },
+      { id: 2, description: "Другое описание" },
+      // Добавьте другие данные по мере необходимости
+    ];
+  
+    // Функция для создания строки таблицы на основе данных
+    function createTableRow(rowData) {
+      const rowId = rowData.id;
+      const rowDescription = rowData.description;
+  
+      const row = document.createElement('tr');
+      row.className = 'border-2 border-blue-500';
+  
+      const idCell = document.createElement('td');
+      idCell.className = 'px-4 py-2';
+      idCell.textContent = rowId;
+  
+      const descriptionCell = document.createElement('td');
+      descriptionCell.className = 'px-4 py-2 mx-2';
+      
+      const descriptionButton = document.createElement('input');
+      descriptionButton.type = 'button';
+      descriptionButton.className = 'cursor-pointer text-black-500 border-2 py-2 px-4 hover:bg-gray-100 rounded-lg w-full mx-auto flex place-content-center';
+      descriptionButton.value = rowDescription;
+      descriptionButton.onclick = () => toggleForm(rowId);
+      
+      descriptionCell.appendChild(descriptionButton);
+  
+      const formContainer = document.createElement('div');
+      formContainer.id = `formContainer${rowId}`;
+      formContainer.className = 'hidden fixed z-100 w-full';
+      
+      // Добавьте код формы с полями, как в предыдущих примерах
+  
+      row.appendChild(idCell);
+      row.appendChild(descriptionCell);
+      row.appendChild(/* Добавьте ячейки для просмотра файлов и кнопки "Принять" */);
+  
+      return row;
+    }
+  
+    // Функция для добавления всех строк в таблицу
+    function addRowsToTable() {
+      const tbody = document.querySelector('tbody');
+      data.forEach((rowData) => {
+        const row = createTableRow(rowData);
+        tbody.appendChild(row);
+      });
+    }
+  
+    // Вызов функции для добавления строк в таблицу
+    addRowsToTable();
+  
+    // Добавьте функции toggleForm и toggleFile, как в предыдущих примерах
+  </script> -->
