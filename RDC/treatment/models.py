@@ -18,8 +18,10 @@ class Researches(models.Model):
 
 
 class Requests(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    service = models.ForeignKey(Services, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, default=1)
+
+    # ОБЯЗАТЕЛЬНО СОЗДАВАЙ УСЛУГУ ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
+    service = models.ForeignKey(Services, on_delete=models.CASCADE, default = 1)
 
     # ОБЯЗАТЕЛЬНО СОЗДАВАЙ ПАЦИЕНТА ПО УМОЛЧАНИЮ И УКАЗЫВАЙ ЕГО ID В default
     patient = models.ForeignKey(Patients, on_delete=models.CASCADE, default=1)

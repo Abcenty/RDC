@@ -46,7 +46,8 @@ def confirmation(request):
 
     # research = Requests.objects.filter(user=request.user, status=4).latest('request_time').research
 
-    Requests.objects.filter(user=request.user, status=3).update(status=4)
+    # Строчка перенесена в контроллер добавления исследования
+    # Requests.objects.filter(user=request.user, status=3).update(status=4)
     service = Requests.objects.filter(user=request.user, status=4).latest('id').service
     patient = Requests.objects.filter(user=request.user, status=4).latest('id').patient
     doctor = Requests.objects.filter(user=request.user, status=4).latest('id').doctor

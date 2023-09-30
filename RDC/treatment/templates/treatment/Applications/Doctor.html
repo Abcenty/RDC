@@ -298,4 +298,13 @@
             </form>-->
           </div>
           {% endblock %}
-       
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const backButton = document.querySelector("#backButton");
+        
+                backButton.addEventListener("click", function () {
+                    window.location.href = "{% url 'service' %}";
+                });
+            });
+        </script>
+        

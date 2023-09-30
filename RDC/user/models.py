@@ -9,7 +9,7 @@ class Services(models.Model):
     price = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.title} | {self.price} руб.'
+        return f'{self.title} | {self.price} руб. {self.id}'
 
 
 class Users(AbstractUser):
@@ -25,6 +25,9 @@ class Users(AbstractUser):
     # 0 - обычный пользователь, 1 - доктор
     is_doctor = models.BooleanField(default=0)
 
+    def __str__(self):
+        return f'{self.last_name} {self.first_name} {self.patronymic} {self.id}'
+
 
 class Patients(models.Model):
     last_name = models.CharField(max_length=32, blank=True)
@@ -35,7 +38,7 @@ class Patients(models.Model):
     Passport = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
-        return f'{self.last_name} {self.first_name} {self.patronymic}'
+        return f'{self.last_name} {self.first_name} {self.patronymic} {self.id}'
 
 
 
