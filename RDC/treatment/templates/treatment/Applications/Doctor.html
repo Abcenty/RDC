@@ -263,23 +263,25 @@
                             <option value="{{doctor.id}}">{{doctor}}</option>
                         {% endfor %}
                     </select>
-                <p>
-                  <input type="submit" value="Далее" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"/>
-                  </p>
+                    <div class="flex flex-row gap-2 mr-auto">
+                      <input v-model="form.serviceForMe"
+                            type="checkbox"
+                            class="w-5 h-5 rounded">
+                      <p>Продолжить без врача</p>
+                    </div>
+                  <div class="items-center max-w-screen-xl flex flex-row justify-between pt-8 w-full">
+                      <button
+                          id="backButton"
+                          type="button"
+                          class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                      >
+                          Назад
+                      </button>
+                      <input type="submit" value="Далее" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"/>
+                  </div>
             </form>
-            <div class="flex flex-row gap-2 mr-auto">
-              <input v-model="form.serviceForMe"
-                    type="checkbox"
-                    class="w-5 h-5 rounded">
-              <p>Продолжить без врача</p>
-            </div>
         </div>
-
-
-
-
-
-          <div class="items-center max-w-screen-xl mx-auto flex flex-row justify-between pt-8">
+          <!-- <div class="items-center max-w-screen-xl mx-auto flex flex-row justify-between pt-8">
             <form action="{% url 'to_services' %}" target="_parent">
               <button
                   type="submit"
@@ -288,15 +290,7 @@
                   Назад
               </button>
             </form>
-            <!--<form action="{% url 'doctor_add' %}" target="_parent">
-              <button
-                  type="submit"
-                  class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
-              >
-                Далее
-              </button>
-            </form>-->
-          </div>
+          </div> -->
           {% endblock %}
           <script>
             document.addEventListener("DOMContentLoaded", function () {

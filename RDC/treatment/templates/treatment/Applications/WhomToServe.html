@@ -345,8 +345,15 @@
                             <div class="flex flex-row gap-3 w-full">
                               {{form.SNILS}}
                             </div> 
-                            <input hidden id="userChoice" name="service_choice" value="">
-                            <div class="">
+                            <input hidden id="userChoice" name="service_choice" value="default">
+                            <div class="items-center w-full mx-auto flex flex-row justify-between pt-8">
+                              <button
+                                  type="button"
+                                  id="backButton"
+                                  class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2 absolute bottom-0 left-0"
+                              >
+                                  Назад
+                              </button>
                               <button
                                 type="submit"
                                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2 absolute bottom-0 right-0"
@@ -358,7 +365,7 @@
                 </div>
             </div>
     </div>
-    <div class="items-center w-full mx-auto flex flex-row justify-between pt-8">
+    <!-- <div class="items-center w-full mx-auto flex flex-row justify-between pt-8">
         <form action="{% url 'to_doctors' %}" target="_parent">
           <button
               type="submit"
@@ -366,7 +373,7 @@
           >
               Назад
           </button>
-        </form>
+        </form> -->
         {% comment %} <form action="{% url 'patient_add' %}" target="_parent" method="post">
            
         </form> {% endcomment %}
@@ -379,15 +386,17 @@
             const passportInput = document.getElementById("passport");
             {% comment %} const passportdateInput = document.getElementById("passport-date"); {% endcomment %}
             const snilsInput = document.getElementById("snils"); 
-        
+
+            const userChoice = document.getElementById("userChoice");
+
             function toggleFormFields(value) {
-                lastNameInput.disabled = (value === "me" || value === "none");
-                firstNameInput.disabled = (value === "me" || value === "none");
-                patronymicInput.disabled = (value === "me" || value === "none");
-                datetimeInput.disabled = (value === "me" || value === "none");
-                passportInput.disabled = (value === "me" || value === "none");
+                lastNameInput.disabled = (value === "me" || value === "none" || value === "default");
+                firstNameInput.disabled = (value === "me" || value === "none" || value === "default");
+                patronymicInput.disabled = (value === "me" || value === "none" || value === "default");
+                datetimeInput.disabled = (value === "me" || value === "none" || value === "default");
+                passportInput.disabled = (value === "me" || value === "none" || value === "default");
                 {% comment %} passportdateInput.disabled = (value === "me" || value === "none");  {% endcomment %}
-                snilsInput.disabled = (value === "me" || value === "none")
+                snilsInput.disabled = (value === "me" || value === "none" || value === "default")
 
                 if (value === "none") {
                     lastNameInput.value = "";
@@ -398,9 +407,19 @@
                     {% comment %} passportdateInput.value = "";  {% endcomment %}
                     snilsInput.value = ""; 
                 }
+
                 const userChoiceField = document.getElementById("userChoice");
                 userChoiceField.value = value;
             }
+            if (userChoice.value === "default") {
+                    lastNameInput.disabled = true;
+                    firstNameInput.disabled = true;
+                    patronymicInput.disabled = true;
+                    datetimeInput.disabled = true;
+                    passportInput.disabled = true;
+                    {% comment %} passportdateInput.disabled = true;  {% endcomment %}
+                    snilsInput.disabled = true; 
+                }
         </script>
         <script>
           document.addEventListener("DOMContentLoaded", function () {
