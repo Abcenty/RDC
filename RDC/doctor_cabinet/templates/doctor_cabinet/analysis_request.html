@@ -192,7 +192,14 @@
                     {{form.file}}
                   </div>
                     <div class="flex mx-auto gap-4 w-full justify-between mt-2">
-                      <input type="button" value="Назад" class="border py-2 px-4 rounded-lg border-blue-500 flex">
+                      <form action="{% url 'to_doctors_requests' %}" target="_parent">
+                        <button
+                            type="submit"
+                            class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                        >
+                            Назад
+                        </button>
+                      </form>
                       <div id="myModal" class="modal">
                         <div class="modal-content">
                           <span class="close" onclick="closeModal()">&times;</span>
@@ -220,22 +227,22 @@
 
             <div class="flex mx-auto gap-4 w-full justify-between mt-2">
                 {% comment %} <input type="button" value="Назад" class="border py-2 px-4 rounded-lg border-blue-500 flex"> {% endcomment %}
-                <form action="{% url 'to_doctors_requests' %}" target="_parent">
+                <!-- <form action="{% url 'to_doctors_requests' %}" target="_parent">
                     <button
                         type="submit"
                         class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
                     >
                         Назад
                     </button>
-                  </form>
-                <div id="myModal" class="modal">
+                  </form> -->
+                <!-- <div id="myModal" class="modal">
                     <div class="modal-content">
                       <span class="close" onclick="closeModal()">&times;</span>
                       <p class="text-center text-gray-700 text-lg mb-4">Вы уверены, что хотите отменить заявку?</p>
                       <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="cancelRequest()">Да, отменить</button>
                     </div>
-                  </div>
-                  <button class="border py-2 px-4 rounded-lg border-blue-500" type="button" onclick="openModal()">Отменить заявку</button>
+                  </div> -->
+                  <!-- <button class="border py-2 px-4 rounded-lg border-blue-500" type="button" onclick="openModal()">Отменить заявку</button> -->
                   
                   <style>
                     /* Стили для модального окна */
@@ -275,27 +282,6 @@
                       color: #fff;
                     }
                   </style>
-                  
-                  <script>
-                    // Открыть модальное окно
-                    function openModal() {
-                      const modal = document.getElementById('myModal');
-                      modal.style.display = 'flex';
-                    }
-                  
-                    // Закрыть модальное окно
-                    function closeModal() {
-                      const modal = document.getElementById('myModal');
-                      modal.style.display = 'none';
-                    }
-                  
-                    // Обработка нажатия кнопки "Отменить"
-                    function cancelRequest() {
-                      // Ваш код для отмены заявки
-                      alert('Заявка успешно отменена.');
-                      closeModal();
-                    }
-                  </script>
                   {% comment %} <p>
                     <input type="submit" value="Отправить"
                      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"/>
@@ -314,7 +300,27 @@
       {% comment %} </form> {% endcomment %}
     </div>
     
-</body>  
+</body> 
+<script>
+  // Открыть модальное окно
+  function openModal() {
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'flex';
+  }
+
+  // Закрыть модальное окно
+  function closeModal() {
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'none';
+  }
+
+  // Обработка нажатия кнопки "Отменить"
+  function cancelRequest() {
+    // Ваш код для отмены заявки
+    alert('Заявка успешно отменена.');
+    closeModal();
+  }
+</script> 
 <script>
     function toggleFile(rowId) {
       const fileContainer = document.getElementById(`fileContainer${rowId}`);
