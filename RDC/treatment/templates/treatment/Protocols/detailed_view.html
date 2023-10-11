@@ -58,13 +58,13 @@
                 </button>
                 <ul class="menu py-2">
                     <li>
-                      <a href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
+                      <a id="changestatus9" href="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Настройки</a>
                     </li>
                     <li>
-                        <a href={% url 'profile' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профиль</a>
+                        <a id="changestatus9" href={% url 'profile' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Профиль</a>
                     </li>
                     <li>
-                      <a href={% url 'authorization' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
+                      <a id="changestatus9" href={% url 'authorization' %} class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Выход</a>
                     </li>
                     <!--Раскомментить, если пользователь - врач-->
                     <!--<li>
@@ -98,19 +98,19 @@
         <div class="items-center justify-between w-full md:flex md:w-auto md:order-1" :class="mobileMenu ? 'block' : 'hidden'">
           <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
             <li>
-              <a href={% url 'service' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Заявки</a>
+              <a id="changestatus9" href={% url 'service' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Заявки</a>
             </li>
             <li>
-              <a href={% url 'services' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Услуги</a>
+              <a id="changestatus9" href={% url 'services' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Услуги</a>
             </li>
             <li>
-              <a href={% url 'uploadedfiles' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Загруженные файлы</a>
+              <a id="changestatus9" href={% url 'uploadedfiles' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Загруженные файлы</a>
             </li>
             <li>
-              <a href={% url 'protocols' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Заключения врачей</a>
+              <a id="changestatus9" href={% url 'protocols' %} class="block py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent text-blue-700 md:p-0">Заключения врачей</a>
             </li>
             <li>
-              <a href={% url 'payment' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Оплата</a>
+              <a id="changestatus9" href={% url 'payment' %} class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0">Оплата</a>
             </li>
           </ul>
         </div>
@@ -194,12 +194,13 @@
                     <input type="submit" value="Отправить"
                      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"/>
                     </p> {% endcomment %}
-                  <form action="{% url 'complete_viewing' request.id %}" target="_parent">
+                  {% comment %} <form action="{% url 'complete_viewing' request.id %}" target="_parent"> {% endcomment %}
+                    <form action="{% url 'complete_viewing'%}" target="_parent">
                     <button
                         type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
+                        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 rounded-lg font-medium rounded-lg text-sm px-12 py-2.5 mr-2 mb-2"
                     >
-                      Отправить
+                      Назад
                     </button>
                   </form>  
             </div>
@@ -219,4 +220,13 @@
         fileContainer.style.display = 'none';
       }
     }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const backButton = document.querySelector("#changestatus9");
+
+        backButton.addEventListener("click", function () {
+            window.location.href = "{% url 'complete_viewing' %}";
+        });
+    });
 </script>

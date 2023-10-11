@@ -39,6 +39,12 @@ def review_analysis(request, request_id):
     return HttpResponseRedirect(reverse('analysis_request'))
 
 
+def cancel_request(request):
+    doctor = Doctors.objects.get(user=request.user.id)
+    Requests.objects.filter(doctor=doctor, status=8).update(status=10)
+    return HttpResponseRedirect(reverse('doctors_request'))
+
+
 # def report_add(request):
 #     if request.method == "POST":
 #         form = DoctorReportAddForm(data=request.POST, files=request.FILES)

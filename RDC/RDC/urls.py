@@ -19,13 +19,15 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path
+from treatment.models import Researches
 from treatment.views import service, doctor, payment, whomToServe, uploadedfiles, uploadFiles, confirmation, services, protocols, detailed_view
 from user.views import authorization, registration, activate_account, profile, alert
-from treatment.services import request_add, doctor_add, patient_add, research_add, pay, protocol_viewing, complete_viewing
+from treatment.services import request_add, doctor_add, patient_add, research_add, pay, protocol_viewing, complete_viewing, delete_request
 from doctor_cabinet.views import doctor_cabinet, doctors_request, analysis_request, completed_request
-from doctor_cabinet.services import request_accept, continue_analysis, complete_analysis, review_analysis # report_add
+from doctor_cabinet.services import request_accept, continue_analysis, complete_analysis, review_analysis, cancel_request # report_add
 from treatment.reverse_addressing import to_services, to_researches, to_confirming, to_doctors, to_patients
 from doctor_cabinet.reverse_addressing import to_doctors_requests
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     # users interface pages
@@ -53,7 +55,9 @@ urlpatterns = [
     path('research_add/', research_add, name='research_add'),
     path('pay/', pay, name='pay'),
     path('protocol_viewing/<int:request_id>', protocol_viewing, name='protocol_viewing'),
-    path('complete_viewing/<int:request_id>', complete_viewing, name='complete_viewing'),
+    # path('complete_viewing/<int:request_id>', complete_viewing, name='complete_viewing'),
+    path('complete_viewing/', complete_viewing, name='complete_viewing'),
+    path('delete_request/', delete_request, name='delete_request'),
 
     # doctors interface logic
     path('request_accept/<int:request_id>', request_accept, name='request_accept'),
@@ -61,6 +65,7 @@ urlpatterns = [
     path('complete_analysis/<int:request_id>', complete_analysis, name='complete_analysis'),
     path('review_analysis/<int:request_id>', review_analysis, name='review_analysis'),
     # path('report_add/', report_add, name='report_add'),
+    path('cancel_request/', cancel_request, name='cancel_request'),
 
     # doctors interface pages
     path('doctor_cabinet/', doctor_cabinet, name='doctor_cabinet'),
@@ -81,6 +86,10 @@ urlpatterns = [
     # email confirming
     path('activate/<str:uidb64>/<str:token>/', activate_account, name='activate'),
     path('alert/', alert, name='alert'),
+
+    # files showing
+    path('media/researches/', Researches.research_, name='research_showing'),
+
 ]
 
 
@@ -88,3 +97,5 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+

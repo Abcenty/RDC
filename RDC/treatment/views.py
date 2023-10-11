@@ -83,7 +83,7 @@ def uploadedfiles(request):
 
 def protocols(request):
     context={
-        'requests': Requests.objects.filter(user=request.user, status__gte = 9),
+        'requests': Requests.objects.filter(user=request.user, status = 9),
     }
     return render(request, 'treatment/Protocols/protocols.html', context)
 

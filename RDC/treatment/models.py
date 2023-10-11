@@ -11,10 +11,14 @@ from doctor_cabinet.models import Doctors, Report
 class Researches(models.Model):
     research_file = models.FileField(upload_to='researches/')
     user = models.ForeignKey(Users, on_delete=models.CASCADE, default=1)
+
+    def research_(self):
+        return '<a href="/media/{0}"><img src="/media/{0}"></a>'.format(self.research_file)
+    research_.allow_tags = True
     
 
     def __str__(self):
-        return f'Документ №{self.id}'
+        return f'{self.research_file}'
     
 
 

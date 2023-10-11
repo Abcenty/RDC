@@ -96,6 +96,11 @@ def research_add(request):
     return HttpResponseRedirect(reverse('confirmation'))
 
 
+def delete_request(request):
+    Requests.objects.filter(user=request.user, status=4).delete()
+    return HttpResponseRedirect(reverse('services'))
+
+
 # Корректно, фильтрация по текущему пользователю
 def pay(request):
     Requests.objects.filter(user=request.user, status=5).update(status=6, payment_data=date.today())
@@ -109,6 +114,10 @@ def protocol_viewing(request, request_id):
 
 
 # Корректно, фильтрация по текущему пользователю
-def complete_viewing(request, request_id):
-    Requests.objects.filter(id=request_id, user=request.user, status = 11).update(status=9)
+# def complete_viewing(request, request_id):
+#     Requests.objects.filter(id=request_id, user=request.user, status = 11).update(status=9)
+#     return HttpResponseRedirect(reverse('protocols'))
+
+def complete_viewing(request):
+    Requests.objects.filter(user=request.user, status = 11).update(status=9)
     return HttpResponseRedirect(reverse('protocols'))

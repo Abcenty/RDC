@@ -13,7 +13,7 @@ class Services(models.Model):
 
 
 class Users(AbstractUser):
-    username=models.CharField(unique=True)
+    username=models.CharField(unique=True, max_length=64)
     email = models.EmailField()
     last_name = models.CharField(max_length=32)
     first_name = models.CharField(max_length=32)

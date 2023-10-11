@@ -134,7 +134,8 @@
                 {% if research.id == request.research.id %}
                 <td class="font-normal p-2 border border-slate-500 border-blue-500">{{request.id}}</td>
                 <td class="font-normal p-2 border border-slate-500 border-blue-500">{{request.request_data}}</td>
-                <td class="font-normal p-2 border border-slate-500 border-blue-500">{{request.research}}</td>
+                {% comment %} <td class="font-normal p-2 border border-slate-500 border-blue-500"><a href = "{{request.research}}" >Файл </a></td> {% endcomment %}
+                <td class="font-normal p-2 border border-slate-500 border-blue-500"><button onclick="" value="Файл" >Файл </button></td>
                 {% endif %}
                 {% endfor %}
               </tr> 

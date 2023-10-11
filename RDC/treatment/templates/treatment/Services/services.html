@@ -117,7 +117,6 @@
 </nav>
 
 <div class="mt-24 flex flex-col items-center max-w-screen-xl mx-auto">
-    {% for service in services %}
     <div class="flex w-full">
         <div class="overflow-x-auto w-full rounded-lg border-2 border-blue-300">
           <table class="table-auto w-full">
@@ -130,17 +129,18 @@
               </tr>
             </thead>
             <tbody class="text-sm">
+                {% for service in services %}
               <tr>
                 <td class="font-normal p-2 border border-slate-500 border-blue-500">{{service.id}}</td>
                 <td class="font-normal p-2 border border-slate-500 border-blue-500">{{service.request_data}}</td>
                 <td class="font-normal p-2 border border-slate-500 border-blue-500">{{service.service.title}}</td>
               </tr>
+              
+      {% endfor %}
             </tbody> 
           </table>
         </div>
       </div> 
-      
-      {% endfor %}
 </div>
 
         <div class="items-center max-w-screen-xl mx-auto flex flex-row justify-between pt-8">
