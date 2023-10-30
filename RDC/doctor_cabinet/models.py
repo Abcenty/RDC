@@ -17,4 +17,4 @@ class Report(models.Model):
     comment = models.TextField(blank=True)
 
     def __str__(self):
-        return f'Заключение №{self.id}'
+        return f'{self.file}'

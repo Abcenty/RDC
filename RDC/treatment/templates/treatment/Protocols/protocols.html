@@ -177,7 +177,7 @@
                 <!-- А вот тут вместо filContainer1, нужно ставить filContainer(id) контейнера -->
                   <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
                     {% if request.research %}
-                    <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.research}}</a>
+                    <a href="/media/{{request.research}}" download class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.research}}</a>
                     {% endif %}
                   </div>
               </div>
@@ -189,7 +189,7 @@
                 <div id="fileContainer{{request.report.id}}" class="hidden fixed z-100 w-3/12">
                     <div class="flex flex-col border-2 border-blue-500 px-4 py-2 bg-gray-100 mt-1 rounded-lg ">
                         {% if request.research %}
-                        <a class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.report}}</a>
+                        <a href="/media/{{request.report}}" download class="w-full mb-2 p-2 border border-gray-300 rounded-md">{{request.report}}</a>
                         {% endif %}
                     </div>
                 </div>
